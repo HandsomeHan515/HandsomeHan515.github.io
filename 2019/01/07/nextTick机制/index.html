@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="nextTick 机制 nextTick主要功能就是改变数据后让回调函数作用于dom更新后nextTick 源码中使用了一个异步锁的概念，即接收第一个回调函数时，先关上锁，执行异步方法。此时，浏览器处于等待执行完同步代码就执行异步代码的情况相当于一群旅客准备上车，当第一个旅客上车的时候，车开始发动，准备出发，等到所有旅客都上车后，就可以正式开车了  123456789101112131415161">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nextTick机制">
+<meta property="og:url" content="https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="从前慢丶">
+<meta property="og:description" content="nextTick 机制 nextTick主要功能就是改变数据后让回调函数作用于dom更新后nextTick 源码中使用了一个异步锁的概念，即接收第一个回调函数时，先关上锁，执行异步方法。此时，浏览器处于等待执行完同步代码就执行异步代码的情况相当于一群旅客准备上车，当第一个旅客上车的时候，车开始发动，准备出发，等到所有旅客都上车后，就可以正式开车了  123456789101112131415161">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-01-07T03:05:01.000Z">
+<meta property="article:modified_time" content="2019-01-07T08:27:35.390Z">
+<meta property="article:author" content="HandsomeHan">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+        
+      
+    
+    <!-- title -->
+    <title>nextTick机制</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/02/14/%E6%8C%89%E4%BD%8D%E4%B8%8E%E3%80%81%E6%88%96%E3%80%81%E5%BC%82%E6%88%96%E7%AD%89%E8%BF%90%E7%AE%97%E6%96%B9%E6%B3%95/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/12/26/SSL%E8%AF%81%E4%B9%A6%E9%85%8D%E7%BD%AE/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&text=nextTick机制"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&title=nextTick机制"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&is_video=false&description=nextTick机制"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=nextTick机制&body=Check out this article: https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&title=nextTick机制"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&title=nextTick机制"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&title=nextTick机制"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&title=nextTick机制"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&name=nextTick机制&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&t=nextTick机制"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nextTick-%E6%9C%BA%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text">nextTick 机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#flushCallbacks-%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">flushCallbacks 函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#macroTimerFunc"><span class="toc-number">1.2.</span> <span class="toc-text">macroTimerFunc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#microTimerFunc"><span class="toc-number">1.3.</span> <span class="toc-text">microTimerFunc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nextTick-%E5%87%BD%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">nextTick 函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%83%85%E6%99%AF%EF%BC%88Vue-2-5-%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">使用情景（Vue 2.5+）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#microTask"><span class="toc-number">1.5.1.</span> <span class="toc-text">microTask</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macroTask"><span class="toc-number">1.5.2.</span> <span class="toc-text">macroTask</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        nextTick机制
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">HandsomeHan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-01-07T03:05:01.000Z" itemprop="datePublished">2019-01-07</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="nextTick-机制"><a href="#nextTick-机制" class="headerlink" title="nextTick 机制"></a>nextTick 机制</h1><blockquote>
+<p>nextTick主要功能就是改变数据后让回调函数作用于dom更新后<br>nextTick 源码中使用了一个异步锁的概念，即接收第一个回调函数时，先关上锁，执行异步方法。此时，浏览器处于等待执行完同步代码就执行异步代码的情况<br>相当于一群旅客准备上车，当第一个旅客上车的时候，车开始发动，准备出发，等到所有旅客都上车后，就可以正式开车了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    data () &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            msg: <span class="string">&#x27;&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    mounted () &#123;</span><br><span class="line">        <span class="built_in">this</span>.msg = <span class="string">&#x27;end&#x27;</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">// macroTask</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;3&#x27;</span>)</span><br><span class="line">        &#125;, <span class="number">0</span>)</span><br><span class="line">        <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">// microTask</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;promise!&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="built_in">this</span>.$nextTick(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.msg)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 执行顺序 1,&#x27;end&#x27;, &#x27;promise!&#x27;, &#x27;2&#x27;, &#x27;3&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="flushCallbacks-函数"><a href="#flushCallbacks-函数" class="headerlink" title="flushCallbacks 函数"></a>flushCallbacks 函数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> callbacks = []</span><br><span class="line"><span class="keyword">let</span> pending = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">flushCallbacks</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 重置异步锁</span></span><br><span class="line">    pending = <span class="literal">false</span></span><br><span class="line">    <span class="comment">// 防止出现nextTick中包含nextTick时出现问题，在执行回调函数队列前，提前复制备份，清空回调函数队列</span></span><br><span class="line">    <span class="keyword">const</span> copies = callbacks.slice(<span class="number">0</span>)</span><br><span class="line">    callbacks.length = <span class="number">0</span></span><br><span class="line">    <span class="comment">// 执行回调函数队列</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; copies.length; i++) &#123;</span><br><span class="line">        copies[i]()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="macroTimerFunc"><a href="#macroTimerFunc" class="headerlink" title="macroTimerFunc"></a>macroTimerFunc</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> macroTimerFunc</span><br><span class="line"></span><br><span class="line"><span class="comment">// Determine (macro) task defer implementation.</span></span><br><span class="line"><span class="comment">// Technically setImmediate should be the ideal choice, but it&#x27;s only available</span></span><br><span class="line"><span class="comment">// in IE. The only polyfill that consistently queues the callback after all DOM</span></span><br><span class="line"><span class="comment">// events triggered in the same loop is by using MessageChannel.</span></span><br><span class="line"><span class="comment">/* istanbul ignore if */</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> setImmediate !== <span class="string">&#x27;undefined&#x27;</span> &amp;&amp; isNative(setImmediate)) &#123;</span><br><span class="line">    macroTimerFunc = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        setImmediate(flushCallbacks)</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> MessageChannel !== <span class="string">&#x27;undefined&#x27;</span> &amp;&amp; (</span><br><span class="line">    isNative(MessageChannel) ||</span><br><span class="line">    <span class="comment">// PhantomJS</span></span><br><span class="line">    MessageChannel.toString() === <span class="string">&#x27;[object MessageChannelConstructor]&#x27;</span></span><br><span class="line">)) &#123;</span><br><span class="line">    <span class="keyword">const</span> channel = <span class="keyword">new</span> MessageChannel()</span><br><span class="line">    <span class="keyword">const</span> port = channel.port2</span><br><span class="line">    channel.port1.onmessage = flushCallbacks</span><br><span class="line">    macroTimerFunc = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        port.postMessage(<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">/* istanbul ignore next */</span></span><br><span class="line">    macroTimerFunc = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(flushCallbacks, <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="microTimerFunc"><a href="#microTimerFunc" class="headerlink" title="microTimerFunc"></a>microTimerFunc</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> microTimerFunc</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">Promise</span> !== <span class="string">&#x27;undefined&#x27;</span> &amp;&amp; isNative(<span class="built_in">Promise</span>)) &#123;</span><br><span class="line">    <span class="keyword">const</span> p = <span class="built_in">Promise</span>.resolve()</span><br><span class="line">    microTimerFunc = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        p.then(flushCallbacks)</span><br><span class="line">        <span class="comment">// in problematic UIWebViews, Promise.then doesn&#x27;t completely break, but</span></span><br><span class="line">        <span class="comment">// it can get stuck in a weird state where callbacks are pushed into the</span></span><br><span class="line">        <span class="comment">// microtask queue but the queue isn&#x27;t being flushed, until the browser</span></span><br><span class="line">        <span class="comment">// needs to do some other work, e.g. handle a timer. Therefore we can</span></span><br><span class="line">        <span class="comment">// &quot;force&quot; the microtask queue to be flushed by adding an empty timer.</span></span><br><span class="line">        <span class="keyword">if</span> (isIOS) <span class="built_in">setTimeout</span>(noop)</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// fallback to macro</span></span><br><span class="line">    microTimerFunc = macroTimerFunc</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="nextTick-函数"><a href="#nextTick-函数" class="headerlink" title="nextTick 函数"></a>nextTick 函数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">nextTick</span> (<span class="params">cb?: <span class="built_in">Function</span>, ctx?: <span class="built_in">Object</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> _resolve</span><br><span class="line">    callbacks.push(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (cb) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                cb.call(ctx)</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                handleError(e, ctx, <span class="string">&#x27;nextTick&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (_resolve) &#123;</span><br><span class="line">            _resolve(ctx)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 如果异步锁未锁上，锁上异步锁，调用异步函数，准备等同步函数执行完后，就开始执行回调函数队列</span></span><br><span class="line">    <span class="keyword">if</span> (!pending) &#123;</span><br><span class="line">        pending = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">if</span> (useMacroTask) &#123;</span><br><span class="line">            macroTimerFunc()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            microTimerFunc()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// $flow-disable-line</span></span><br><span class="line">    <span class="keyword">if</span> (!cb &amp;&amp; <span class="keyword">typeof</span> <span class="built_in">Promise</span> !== <span class="string">&#x27;undefined&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">            _resolve = resolve</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// nextTick 源码中使用了一个异步锁的概念，即接收第一个回调函数时，先关上锁，执行异步方法。此时，浏览器处于等待执行完同步代码就执行异步代码的情况</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用情景（Vue-2-5-）"><a href="#使用情景（Vue-2-5-）" class="headerlink" title="使用情景（Vue 2.5+）"></a>使用情景（Vue 2.5+）</h2><blockquote>
+<p>在Vue 2.4之前的版本中，nextTick几乎都是基于microTask实现的，但是由于microTask的执行优先级非常高，在某些场景之下它甚至要比事件冒泡还要快，就会导致一些诡异的问题；但是如果全部都改成macroTask，对一些有重绘和动画的场景也会有性能的影响。所以最终nextTick采取的策略是默认走microTask，对于一些DOM的交互事件，如v-on绑定的事件回调处理函数的处理，会强制走macroTask</p>
+</blockquote>
+<h3 id="microTask"><a href="#microTask" class="headerlink" title="microTask"></a>microTask</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        name: <span class="string">&#x27;a&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">mounted</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = <span class="string">&#x27;b&#x27;</span>;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;script&#x27;</span>)</span><br><span class="line">        <span class="built_in">this</span>.$nextTick(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;nextTick&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;promise&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// &#x27;script&#x27;,&#x27;nextTick&#x27;,&#x27;promise&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="macroTask"><a href="#macroTask" class="headerlink" title="macroTask"></a>macroTask</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;handleClick&quot;</span>&gt;</span>change<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">        el: <span class="string">&#x27;#app&#x27;</span>,</span></span><br><span class="line">        data: &#123;</span><br><span class="line"><span class="javascript">            name: <span class="string">&#x27;start&#x27;</span></span></span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line"><span class="javascript">            handleClick: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.nam = <span class="string">&#x27;end&#x27;</span>;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">&#x27;script&#x27;</span>)</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.$nextTick(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">console</span>.log(<span class="string">&#x27;nextTick&#x27;</span>)</span></span><br><span class="line">                &#125;)</span><br><span class="line"><span class="javascript">                <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">console</span>.log(<span class="string">&#x27;promise&#x27;</span>)</span></span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">// 触发事件后 =&gt; &#x27;script&#x27;,&#x27;promise&#x27;,&#x27;nextTick&#x27;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nextTick-%E6%9C%BA%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text">nextTick 机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#flushCallbacks-%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">flushCallbacks 函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#macroTimerFunc"><span class="toc-number">1.2.</span> <span class="toc-text">macroTimerFunc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#microTimerFunc"><span class="toc-number">1.3.</span> <span class="toc-text">microTimerFunc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nextTick-%E5%87%BD%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">nextTick 函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%83%85%E6%99%AF%EF%BC%88Vue-2-5-%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">使用情景（Vue 2.5+）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#microTask"><span class="toc-number">1.5.1.</span> <span class="toc-text">microTask</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macroTask"><span class="toc-number">1.5.2.</span> <span class="toc-text">macroTask</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&text=nextTick机制"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&title=nextTick机制"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&is_video=false&description=nextTick机制"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=nextTick机制&body=Check out this article: https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&title=nextTick机制"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&title=nextTick机制"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&title=nextTick机制"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&title=nextTick机制"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&name=nextTick机制&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2019/01/07/nextTick%E6%9C%BA%E5%88%B6/&t=nextTick机制"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2017-2021
+    HandsomeHan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

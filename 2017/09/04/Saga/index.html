@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Redux Saga简述 Reducers负责处理action的state更新； Sagas负责协调那些复杂或异步的操作。  安装npm install --save redux-saga  12345678910111213141516&#x2F;&#x2F; ...import &amp;#123; createStore, applyMiddleware &amp;#125; from &#39;redux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Saga">
+<meta property="og:url" content="https://handsomehan.cn/2017/09/04/Saga/index.html">
+<meta property="og:site_name" content="从前慢丶">
+<meta property="og:description" content="Redux Saga简述 Reducers负责处理action的state更新； Sagas负责协调那些复杂或异步的操作。  安装npm install --save redux-saga  12345678910111213141516&#x2F;&#x2F; ...import &amp;#123; createStore, applyMiddleware &amp;#125; from &#39;redux">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-09-04T07:33:49.000Z">
+<meta property="article:modified_time" content="2018-08-29T02:10:43.454Z">
+<meta property="article:author" content="HandsomeHan">
+<meta property="article:tag" content="Saga">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+        
+      
+    
+    <!-- title -->
+    <title>Saga</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/09/04/Redux/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/09/04/Saga/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/09/04/Saga/&text=Saga"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/09/04/Saga/&title=Saga"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/09/04/Saga/&is_video=false&description=Saga"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Saga&body=Check out this article: https://handsomehan.cn/2017/09/04/Saga/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/09/04/Saga/&title=Saga"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/09/04/Saga/&title=Saga"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/09/04/Saga/&title=Saga"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/09/04/Saga/&title=Saga"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/09/04/Saga/&name=Saga&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/09/04/Saga/&t=Saga"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redux-Saga"><span class="toc-number">1.</span> <span class="toc-text">Redux Saga</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text">辅助函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#take"><span class="toc-number">1.3.1.</span> <span class="toc-text">take</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#put"><span class="toc-number">1.3.2.</span> <span class="toc-text">put</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call"><span class="toc-number">1.3.3.</span> <span class="toc-text">call</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#takeEvery"><span class="toc-number">1.3.4.</span> <span class="toc-text">takeEvery</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#takeLatest"><span class="toc-number">1.3.5.</span> <span class="toc-text">takeLatest</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fork%E5%92%8Ccancel"><span class="toc-number">1.3.6.</span> <span class="toc-text">fork和cancel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.3.7.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#takeEvery%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.8.</span> <span class="toc-text">takeEvery的使用</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Saga
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">HandsomeHan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-09-04T07:33:49.000Z" itemprop="datePublished">2017-09-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/JavaScript/">JavaScript</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Saga/" rel="tag">Saga</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Redux-Saga"><a href="#Redux-Saga" class="headerlink" title="Redux Saga"></a>Redux Saga</h1><h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><ul>
+<li>Reducers负责处理action的state更新；</li>
+<li>Sagas负责协调那些复杂或异步的操作。</li>
+</ul>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>npm install --save redux-saga
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; ...</span><br><span class="line">import &#123; createStore, applyMiddleware &#125; from &#39;redux&#39;</span><br><span class="line">import createSagaMiddleware from &#39;redux-saga&#39;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ...</span><br><span class="line">import &#123; rootSaga &#125; from &#39;.&#x2F;sagas&#39;</span><br><span class="line"></span><br><span class="line">const sagaMiddleware &#x3D; createSagaMiddleware()</span><br><span class="line">const store &#x3D; createStore(</span><br><span class="line">  reducer,</span><br><span class="line">  applyMiddleware(sagaMiddleware)</span><br><span class="line">)</span><br><span class="line">sagaMiddleware.run(rootSaga)</span><br><span class="line"></span><br><span class="line">const action &#x3D; type &#x3D;&gt; store.dispatch(&#123;type&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="辅助函数"><a href="#辅助函数" class="headerlink" title="辅助函数"></a>辅助函数</h2><pre><code>用来在一些特定的action被发起到Store时派生任务。
+</code></pre>
+<ol>
+<li>takeEvery</li>
+<li>put: 用于创建dispatch Effect</li>
+<li>take: 通过全面控制action观察进程来构建复杂的控制流</li>
+<li>fork: 无阻塞调用</li>
+</ol>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yield fetch(url) &#x3D;&gt; yield call(fetch, url)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="take"><a href="#take" class="headerlink" title="take"></a>take</h3><pre><code>等待dispatch匹配某个action
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while(true) &#123;</span><br><span class="line">    yield take(&#39;Click_Action&#39;)</span><br><span class="line">    yield fork(clickButtonSaga)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="put"><a href="#put" class="headerlink" title="put"></a>put</h3><pre><code>触发某个action,作用和dispatch相同
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yield put(&#123;type: &#39;CLICK&#39;&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;具体例子</span><br><span class="line">import &#123; call, put &#125; from &#39;redux-saga&#x2F;effects&#39;</span><br><span class="line"></span><br><span class="line">export function* fetchData(action) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        const data &#x3D; yield call(fetch, url)</span><br><span class="line">        yield put(&#123;type: &#39;FETCH_SUCCESS&#39;, data&#125;)</span><br><span class="line">    &#125; catch (error) &#123;</span><br><span class="line">        yield put(&#123;type: &#39;FETCH_FAILED&#39;, error&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="call"><a href="#call" class="headerlink" title="call"></a>call</h3><pre><code>有阻塞的调用saga或者返回promise的函数，只在触发某个动作
+</code></pre>
+<h3 id="takeEvery"><a href="#takeEvery" class="headerlink" title="takeEvery"></a>takeEvery</h3><pre><code>循环监听某个触发动作，通常会使用while循环替代
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import &#123;takeEvery&#125; from &#39;redux-saga&#x2F;effects&#39;</span><br><span class="line"></span><br><span class="line">function* watchFetchData() &#123;</span><br><span class="line">  yield takeEvery(&#39;FETCH_REQUESTED&#39;, fetchData)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="takeLatest"><a href="#takeLatest" class="headerlink" title="takeLatest"></a>takeLatest</h3><pre><code>对于触发多个action的时候，只执行最后一个，其他的会自动取消
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import &#123; takeLatest &#125; from &#39;redux-saga&#x2F;effects&#39;</span><br><span class="line"></span><br><span class="line">function* watchFetchData() &#123;</span><br><span class="line">  yield takeLatest(&#39;FETCH_REQUESTED&#39;, fetchData)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="fork和cancel"><a href="#fork和cancel" class="headerlink" title="fork和cancel"></a>fork和cancel</h3><pre><code>通常fork和cancel配合使用，实现非阻塞任务，take是阻塞状态，也就是实现执行take的时候，无法继续向下执行，fork是非阻塞的，同样可以使用cancel取消一个fork任务
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function* authorize(user, password) &#123;</span><br><span class="line">  try &#123;</span><br><span class="line">    const token &#x3D; yield call(Api.authorize, user, password)</span><br><span class="line">    yield put(&#123;type: &#39;LOGIN_SUCCESS&#39;, token&#125;)</span><br><span class="line">  &#125; catch(error) &#123;</span><br><span class="line">    yield put(&#123;type: &#39;LOGIN_ERROR&#39;, error&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function* loginFlow() &#123;</span><br><span class="line">  while(true) &#123;</span><br><span class="line">    const &#123;user, password&#125; &#x3D; yield take(&#39;LOGIN_REQUEST&#39;)</span><br><span class="line">    yield fork(authorize, user, password)</span><br><span class="line">    yield take([&#39;LOGOUT&#39;, &#39;LOGIN_ERROR&#39;])</span><br><span class="line">    yield call(Api.clearItem(&#39;token&#39;))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>当执行yield fork(authorize, user, password),同时执行yield take([&#39;LOGOUT&#39;, &#39;LOGIN_ERROR&#39;])
+</code></pre>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><pre><code>我们假设远程数据读取因为某些原因失败了，API函数API.fetch返回一个被拒绝(rejected)的Promise
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import Api from &#39;.&#x2F;Api&#39;</span><br><span class="line">import &#123; call, put &#125; from &#39;redux-saga&#x2F;effects&#39;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ...</span><br><span class="line">function* fetchProducts() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        const products &#x3D; yield call(Api.fetch, &#39;&#x2F;products&#39;)</span><br><span class="line">        yield put(&#123; type: &#39;PRODUCTS_RECEIVED&#39;, products &#125;)</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">        yield put(&#123; type: &#39;PRODUCTS_REQUEST_FAILED&#39;, err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="takeEvery的使用"><a href="#takeEvery的使用" class="headerlink" title="takeEvery的使用"></a>takeEvery的使用</h3><pre><code>saga中的take并不支持action的循环调用，即遍历数组执行action，为解决该问题，可以使用takeEvery来执行action，此时即可实现遍历数组执行action。
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import &#123; call, put, takeEvery &#125; from &#39;redux-saga&#x2F;effects&#39;</span><br><span class="line"></span><br><span class="line">function* fetchUsr(action) &#123;</span><br><span class="line">    const payload &#x3D; action</span><br><span class="line">    try &#123;</span><br><span class="line">        const user &#x3D; yield call(api.getUser, payload)</span><br><span class="line">        yield put(&#123; type: GET_ENTITIES_USER, user &#125;)</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">        console.log(&#39;err: %o&#39;, err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function* mySaga() &#123;</span><br><span class="line">    &#x2F;&#x2F;在每个 &#39;GET_USER&#39; action 被发起时调用 fetchUser</span><br><span class="line">    &#x2F;&#x2F;允许并发（译注：即同时处理多个相同的 action）</span><br><span class="line">    takeEvery(actions.GET_USER, fecthUser)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redux-Saga"><span class="toc-number">1.</span> <span class="toc-text">Redux Saga</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text">辅助函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#take"><span class="toc-number">1.3.1.</span> <span class="toc-text">take</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#put"><span class="toc-number">1.3.2.</span> <span class="toc-text">put</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call"><span class="toc-number">1.3.3.</span> <span class="toc-text">call</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#takeEvery"><span class="toc-number">1.3.4.</span> <span class="toc-text">takeEvery</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#takeLatest"><span class="toc-number">1.3.5.</span> <span class="toc-text">takeLatest</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fork%E5%92%8Ccancel"><span class="toc-number">1.3.6.</span> <span class="toc-text">fork和cancel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.3.7.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#takeEvery%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.8.</span> <span class="toc-text">takeEvery的使用</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/09/04/Saga/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/09/04/Saga/&text=Saga"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/09/04/Saga/&title=Saga"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/09/04/Saga/&is_video=false&description=Saga"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Saga&body=Check out this article: https://handsomehan.cn/2017/09/04/Saga/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/09/04/Saga/&title=Saga"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/09/04/Saga/&title=Saga"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/09/04/Saga/&title=Saga"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/09/04/Saga/&title=Saga"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/09/04/Saga/&name=Saga&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/09/04/Saga/&t=Saga"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2017-2021
+    HandsomeHan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

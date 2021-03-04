@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="App支付请求参数说明(必传字段)appid（应用id） method (接口名称，若是APP支付接口值是：alipay.trade.app.pay) format (json) charset (UTF-8) sign_type (签名算法类型RSA2和RSA，推荐使用RSA) sign (签名) timestamp (请求时间 格式是：2014-07-24 03:07:50) version">
+<meta property="og:type" content="article">
+<meta property="og:title" content="支付宝支付（Python版）">
+<meta property="og:url" content="https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/index.html">
+<meta property="og:site_name" content="从前慢丶">
+<meta property="og:description" content="App支付请求参数说明(必传字段)appid（应用id） method (接口名称，若是APP支付接口值是：alipay.trade.app.pay) format (json) charset (UTF-8) sign_type (签名算法类型RSA2和RSA，推荐使用RSA) sign (签名) timestamp (请求时间 格式是：2014-07-24 03:07:50) version">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-10-14T07:11:15.000Z">
+<meta property="article:modified_time" content="2018-08-29T02:10:43.463Z">
+<meta property="article:author" content="HandsomeHan">
+<meta property="article:tag" content="Others">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+        
+      
+    
+    <!-- title -->
+    <title>支付宝支付（Python版）</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/30/DRF%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BE%9D%E8%B5%96/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&text=支付宝支付（Python版）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&title=支付宝支付（Python版）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&is_video=false&description=支付宝支付（Python版）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=支付宝支付（Python版）&body=Check out this article: https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&title=支付宝支付（Python版）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&title=支付宝支付（Python版）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&title=支付宝支付（Python版）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&title=支付宝支付（Python版）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&name=支付宝支付（Python版）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&t=支付宝支付（Python版）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#App%E6%94%AF%E4%BB%98%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E-%E5%BF%85%E4%BC%A0%E5%AD%97%E6%AE%B5"><span class="toc-number">1.</span> <span class="toc-text">App支付请求参数说明(必传字段)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">示例代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B%E7%9A%84%E8%8E%B7%E5%8F%96"><span class="toc-number">1.2.</span> <span class="toc-text">请求示例的获取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E6%8C%89%E7%85%A7key-value-amp-key-value%E6%96%B9%E5%BC%8F%E6%8B%BC%E6%8E%A5%E7%9A%84%E6%9C%AA%E7%AD%BE%E5%90%8D%E5%8E%9F%E5%A7%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%9A"><span class="toc-number">1.2.1.</span> <span class="toc-text">请求参数按照key&#x3D;value&amp;key&#x3D;value方式拼接的未签名原始字符串：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%8E%9F%E5%A7%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9B%E8%A1%8C%E7%AD%BE%E5%90%8D"><span class="toc-number">1.2.2.</span> <span class="toc-text">对原始字符串进行签名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%8A%E7%94%9F%E6%88%90%E7%9A%84%E7%AD%BE%E5%90%8D%E8%B5%8B%E5%80%BC%E7%BB%99sign%E5%8F%82%E6%95%B0%EF%BC%8C%E6%8B%BC%E6%8E%A5%E5%88%B0%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E4%B8%AD"><span class="toc-number">1.2.3.</span> <span class="toc-text">把生成的签名赋值给sign参数，拼接到请求参数中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E8%A1%8C%E8%BF%87urlencode%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.</span> <span class="toc-text">进行过urlencode的数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">1.4.</span> <span class="toc-text">注意</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        支付宝支付（Python版）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">HandsomeHan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-10-14T07:11:15.000Z" itemprop="datePublished">2017-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Others/">Others</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Others/" rel="tag">Others</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="App支付请求参数说明-必传字段"><a href="#App支付请求参数说明-必传字段" class="headerlink" title="App支付请求参数说明(必传字段)"></a>App支付请求参数说明(必传字段)</h1><pre><code>appid（应用id）
+method (接口名称，若是APP支付接口值是：alipay.trade.app.pay)
+format (json)
+charset (UTF-8)
+sign_type (签名算法类型RSA2和RSA，推荐使用RSA)
+sign (签名)
+timestamp (请求时间 格式是：2014-07-24 03:07:50)
+version （版本号：1.0）
+notify_url （支付宝服务器主动通知商户服务器里指定的页面）
+biz_content （业务请求参数）
+业务参数必传字段
+subject(商品标题)
+out_trade_no（商户网站唯一订单号）
+total_amount （价钱，字符串类型，单位是元）
+product_code （销售商品码： APP支付的固定值：QUICK_MSECURITY_PAY）
+</code></pre>
+<h2 id="示例代码："><a href="#示例代码：" class="headerlink" title="示例代码："></a>示例代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">biz_content &#x3D; &#123;</span><br><span class="line">    &#39;subject&#39;: subject,</span><br><span class="line">    &#39;total_amount&#39;: &#39;%.2f&#39; % float(total_amount),</span><br><span class="line">    &#39;product_code&#39;: &#39;QUICK_MSECURITY_PAY&#39;,</span><br><span class="line">    &#39;out_trade_no&#39;: out_trade_no,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">payload &#x3D; &#123;</span><br><span class="line">    &#39;app_id&#39;: app_id,</span><br><span class="line">    &#39;method&#39;: &#39;alipay.trade.app.pay&#39;,</span><br><span class="line">    &#39;charset&#39;: &#39;UTF-8&#39;,</span><br><span class="line">    &#39;format&#39;: &#39;json&#39;,</span><br><span class="line">    &#39;sign_type&#39;: &#39;RSA2&#39;,</span><br><span class="line">    &#39;timestamp&#39;: timestamp,</span><br><span class="line">    &#39;version&#39;: &#39;1.0&#39;,</span><br><span class="line">    &#39;notify_url&#39;: notify_url,</span><br><span class="line">    # 关于biz_content一定要对biz_content进行json.dumps操作，进行urlencode、生成sign时，会把biz_content整体当成一个value，所以要求该值是一个严格的json.</span><br><span class="line">    &#39;biz_content&#39;: json.dumps(biz_content, separators&#x3D;(&#39;,&#39;, &#39;:&#39;)), # separators&#x3D;(&#39;,&#39;, &#39;:&#39;)可以用来去掉json中的空格来压缩json</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="请求示例的获取"><a href="#请求示例的获取" class="headerlink" title="请求示例的获取"></a>请求示例的获取</h2><h3 id="请求参数按照key-value-amp-key-value方式拼接的未签名原始字符串："><a href="#请求参数按照key-value-amp-key-value方式拼接的未签名原始字符串：" class="headerlink" title="请求参数按照key=value&amp;key=value方式拼接的未签名原始字符串："></a>请求参数按照key=value&amp;key=value方式拼接的未签名原始字符串：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app_id&#x3D;2015052600090779&amp;biz_content&#x3D;&#123;&quot;timeout_express&quot;:&quot;30m&quot;,&quot;product_code&quot;:&quot;QUICK_MSECURITY_PAY&quot;,&quot;total_amount&quot;:&quot;0.01&quot;,&quot;subject&quot;:&quot;1&quot;,&quot;body&quot;:&quot;我是测试数据&quot;,&quot;out_trade_no&quot;:&quot;IQJZSRC1YMQB5HU&quot;&#125;&amp;charset&#x3D;utf-8&amp;format&#x3D;json&amp;method&#x3D;alipay.trade.app.pay&amp;notify_url&#x3D;http:&#x2F;&#x2F;domain.merchant.com&#x2F;payment_notify&amp;sign_type&#x3D;RSA2&amp;timestamp&#x3D;2016-08-25 20:26:31&amp;version&#x3D;1.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="对原始字符串进行签名"><a href="#对原始字符串进行签名" class="headerlink" title="对原始字符串进行签名"></a>对原始字符串进行签名</h3><ol>
+<li>筛选并排序<br> 获取所有请求参数，不包括字节类型参数，如文件、字节流，剔除sign字段，剔除值为空的参数，并按照第一个字符的键值ASCII码递增排序（字母升序排序），如果遇到相同字符则按照第二个字符的键值ASCII码递增排序，以此类推</li>
+<li>拼接<br> 将排序后的参数与其对应值，组合成“参数=参数值”的格式，并且把这些参数用&amp;字符连接起来，此时生成的字符串为待签名字符串</li>
+<li>调用签名函数<br> 使用各自语言对应的SHA256WithRSA(对应sign_type为RSA2)或SHA1WithRSA(对应sign_type为RSA)签名函数利用商户私钥对待签名字符串进行签名，并进行Base64编码</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 对payload数据进行排序和拼接</span><br><span class="line">def order_data(payload):</span><br><span class="line">    lst &#x3D; []</span><br><span class="line">    for key, value in payload.items():</span><br><span class="line">        lst.append(&quot;&#123;&#125;&#x3D;&#123;&#125;&quot;.format(key, value))</span><br><span class="line">    lst.sort()</span><br><span class="line">    order_payload &#x3D; &quot;&amp;&quot;.join(lst)</span><br><span class="line">    return order_payload</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import rsa</span><br><span class="line">import base64</span><br><span class="line"></span><br><span class="line">def sign(payload, private_key&#x3D;None):</span><br><span class="line">    private_key &#x3D; rsa.PrivateKey._load_pkcs1_pem(private_key)</span><br><span class="line">    sign &#x3D; rsa.sign(payload.encode(&#39;utf-8&#39;), private_key, SIGN_TYPE)</span><br><span class="line">    b64sing &#x3D; base64.encodebytes(sign).decode(&quot;utf8&quot;).replace(&quot;\n&quot;, &quot;&quot;)</span><br><span class="line">    return b64sing</span><br></pre></td></tr></table></figure>
+
+<h3 id="把生成的签名赋值给sign参数，拼接到请求参数中"><a href="#把生成的签名赋值给sign参数，拼接到请求参数中" class="headerlink" title="把生成的签名赋值给sign参数，拼接到请求参数中"></a>把生成的签名赋值给sign参数，拼接到请求参数中</h3><p>最后对请求字符串的所有一级value（biz_content作为一个value）进行encode，编码格式按请求串中的charset为准，没传charset按UTF-8处理，获得最终的请求字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#  对所有value值进行urlencode操作</span><br><span class="line">from urllib.parse import quote_plus</span><br><span class="line"></span><br><span class="line">def urlencode_data(payload, sign):</span><br><span class="line">    lst &#x3D; []</span><br><span class="line">    for key, value in payload.items():</span><br><span class="line">        lst.append(&quot;&#123;&#125;&#x3D;&#123;&#125;&quot;.format(</span><br><span class="line">            key, quote_plus(value, encoding&#x3D;&#39;utf-8&#39;)))</span><br><span class="line">    lst.sort()</span><br><span class="line">    order_payload &#x3D; &quot;&amp;&quot;.join(lst)</span><br><span class="line">    if sign:</span><br><span class="line">        order_payload +&#x3D; &quot;&amp;sign&#x3D;%s&quot; % quote_plus(sign, encoding&#x3D;&#39;utf-8&#39;)</span><br><span class="line">    return order_payload</span><br></pre></td></tr></table></figure>
+
+<h2 id="进行过urlencode的数据"><a href="#进行过urlencode的数据" class="headerlink" title="进行过urlencode的数据"></a>进行过urlencode的数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">app_id&#x3D;2016081600254796&amp;biz_content&#x3D;%7B%22subject%22%3A%22%5Cu6d4b%5Cu8bd5%22%2C%22total_amount%22%3A%220.01%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22out_trade_no%22%3A%22alipay20171014%22%7D&amp;charset&#x3D;UTF-8&amp;format&#x3D;json&amp;method&#x3D;alipay.trade.app.pay&amp;notify_url&#x3D;http%3A%2F%2Fdongwu-inc.com%3A10014%2Falipay%2Fnotify%2F&amp;sign_type&#x3D;RSA2&amp;timestamp&#x3D;2017-10-14+14%3A03%3A50&amp;version&#x3D;1.0&amp;sign&#x3D;PbDyqQ%2BuAdJXWmEuJSFRq%2FiEPg7CJGbsf%2FexHOSG2%2FiW2TGigeFRKhZJNpxcImdkdcFLmFLlEhTNotfJKMDfhjFx0TJH0vVxQHECnkO5XpVpJ%2F2YZbj3fi8UPe2N%2FiZ9tJ5LBp%2Bj%2BXmBcW55lvsUA5s09bTgn5wU%2BhY4kiB6YO0U1CqARyPd6b2Nhs2A6jN4utyjzoUOvDQwXksmDB48qJSnJfdcfbxP1AtZ4nAVY2vtWZHPtQbj5NqY6jsNd2WxCRVqwHYdMZf0lHPwXa7ygVeALtIDhw%2FYXepOmTNJkYJs4sIpB8p9rpSgoY5A46SDThM90Vg5Q4c0d4kxWnG9%2FA%3D%3D</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ol>
+<li>需对biz_content进行json.dumps操作将其转化为严格的json格式，生成sign和urlencode时都需要该操作；</li>
+<li>向前端传值时，需对整个数据的value（拼接字符串的value值）进行urlencode，其中包括sign的值；</li>
+<li>因对value进行urlencode, 所以需要biz_content为严格的json格式，单引号和双引号的urlencode不同，导致签名失败的原因大都是该位置出现了问题。</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#App%E6%94%AF%E4%BB%98%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E-%E5%BF%85%E4%BC%A0%E5%AD%97%E6%AE%B5"><span class="toc-number">1.</span> <span class="toc-text">App支付请求参数说明(必传字段)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">示例代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E7%A4%BA%E4%BE%8B%E7%9A%84%E8%8E%B7%E5%8F%96"><span class="toc-number">1.2.</span> <span class="toc-text">请求示例的获取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E6%8C%89%E7%85%A7key-value-amp-key-value%E6%96%B9%E5%BC%8F%E6%8B%BC%E6%8E%A5%E7%9A%84%E6%9C%AA%E7%AD%BE%E5%90%8D%E5%8E%9F%E5%A7%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%9A"><span class="toc-number">1.2.1.</span> <span class="toc-text">请求参数按照key&#x3D;value&amp;key&#x3D;value方式拼接的未签名原始字符串：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%8E%9F%E5%A7%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9B%E8%A1%8C%E7%AD%BE%E5%90%8D"><span class="toc-number">1.2.2.</span> <span class="toc-text">对原始字符串进行签名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%8A%E7%94%9F%E6%88%90%E7%9A%84%E7%AD%BE%E5%90%8D%E8%B5%8B%E5%80%BC%E7%BB%99sign%E5%8F%82%E6%95%B0%EF%BC%8C%E6%8B%BC%E6%8E%A5%E5%88%B0%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E4%B8%AD"><span class="toc-number">1.2.3.</span> <span class="toc-text">把生成的签名赋值给sign参数，拼接到请求参数中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E8%A1%8C%E8%BF%87urlencode%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.</span> <span class="toc-text">进行过urlencode的数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">1.4.</span> <span class="toc-text">注意</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&text=支付宝支付（Python版）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&title=支付宝支付（Python版）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&is_video=false&description=支付宝支付（Python版）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=支付宝支付（Python版）&body=Check out this article: https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&title=支付宝支付（Python版）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&title=支付宝支付（Python版）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&title=支付宝支付（Python版）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&title=支付宝支付（Python版）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&name=支付宝支付（Python版）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/&t=支付宝支付（Python版）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2017-2021
+    HandsomeHan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

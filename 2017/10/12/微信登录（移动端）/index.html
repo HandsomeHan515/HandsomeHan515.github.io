@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="微信登录（移动端）条件 拥有一个已审核通过的移动应用，并获得相应的AppID和AppSecret，申请微信登录且通过审核后，可开始接入流程 需要安全微信客户端 对于Android应用，建议总是显示微信登录按钮，当用户手机没有安装微信客户端时，请引导用户下载安装微信客户端。 对于iOS应用，考虑到iOS应用商店审核指南中的相关规定，建议开发者接入微信登录时，先检测用户手机是否已安装微信客户端（使用s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信登录（移动端）">
+<meta property="og:url" content="https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/index.html">
+<meta property="og:site_name" content="从前慢丶">
+<meta property="og:description" content="微信登录（移动端）条件 拥有一个已审核通过的移动应用，并获得相应的AppID和AppSecret，申请微信登录且通过审核后，可开始接入流程 需要安全微信客户端 对于Android应用，建议总是显示微信登录按钮，当用户手机没有安装微信客户端时，请引导用户下载安装微信客户端。 对于iOS应用，考虑到iOS应用商店审核指南中的相关规定，建议开发者接入微信登录时，先检测用户手机是否已安装微信客户端（使用s">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-10-12T04:06:52.000Z">
+<meta property="article:modified_time" content="2018-08-29T02:10:43.463Z">
+<meta property="article:author" content="HandsomeHan">
+<meta property="article:tag" content="Others">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+        
+      
+    
+    <!-- title -->
+    <title>微信登录（移动端）</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/14/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%EF%BC%88Python%E7%89%88%EF%BC%89/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/12/%E6%94%AF%E4%BB%98%E5%AE%9D%E7%AC%AC%E4%B8%89%E6%96%B9%E6%94%AF%E4%BB%98%E7%94%B3%E8%AF%B7%E6%B5%81%E7%A8%8B/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&text=微信登录（移动端）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&title=微信登录（移动端）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&is_video=false&description=微信登录（移动端）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=微信登录（移动端）&body=Check out this article: https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&title=微信登录（移动端）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&title=微信登录（移动端）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&title=微信登录（移动端）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&title=微信登录（移动端）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&name=微信登录（移动端）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&t=微信登录（移动端）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">微信登录（移动端）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%8E%88%E6%9D%83%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">获取授权码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%88%E6%9D%83%E5%90%8E%EF%BC%8C%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">授权后，接口调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96access-token"><span class="toc-number">1.3.1.</span> <span class="toc-text">获取access_token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96refresh-token"><span class="toc-number">1.3.2.</span> <span class="toc-text">获取refresh_token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81access-token%E6%98%AF%E5%90%A6%E6%9C%89%E6%95%88"><span class="toc-number">1.3.3.</span> <span class="toc-text">验证access_token是否有效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF"><span class="toc-number">1.3.4.</span> <span class="toc-text">获取用户个人信息</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        微信登录（移动端）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">HandsomeHan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-10-12T04:06:52.000Z" itemprop="datePublished">2017-10-12</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Others/">Others</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Others/" rel="tag">Others</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="微信登录（移动端）"><a href="#微信登录（移动端）" class="headerlink" title="微信登录（移动端）"></a>微信登录（移动端）</h1><h2 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h2><ol>
+<li>拥有一个已审核通过的移动应用，并获得相应的AppID和AppSecret，申请微信登录且通过审核后，可开始接入流程</li>
+<li>需要安全微信客户端</li>
+<li>对于Android应用，建议总是显示微信登录按钮，当用户手机没有安装微信客户端时，请引导用户下载安装微信客户端。</li>
+<li>对于iOS应用，考虑到iOS应用商店审核指南中的相关规定，建议开发者接入微信登录时，先检测用户手机是否已安装微信客户端（使用sdk中isWXAppInstalled函数 ），对未安装的用户隐藏微信登录按钮，只提供其他登录方式（比如手机号注册登录、游客登录等）。</li>
+</ol>
+<h2 id="获取授权码"><a href="#获取授权码" class="headerlink" title="获取授权码"></a>获取授权码</h2><p>由前端进行操作获得code和open_id</p>
+<h2 id="授权后，接口调用"><a href="#授权后，接口调用" class="headerlink" title="授权后，接口调用"></a>授权后，接口调用</h2><h3 id="获取access-token"><a href="#获取access-token" class="headerlink" title="获取access_token"></a>获取access_token</h3><pre><code>地址：https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&amp;secret=SECRET&amp;code=CODE&amp;grant_type=authorization_code
+参数：
+</code></pre>
+<ul>
+<li>appid(应用唯一标识，在微信开放平台提交应用审核通过后获得)</li>
+<li>secret(应用密钥AppSecret，在微信开放平台提交应用审核通过后获得)</li>
+<li>code(填写第一步获取的code参数)</li>
+<li>grant_type(填authorization_code)</li>
+</ul>
+<p>返回信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;access_token&quot;:&quot;ACCESS_TOKEN&quot;,</span><br><span class="line">    &quot;expires_in&quot;:7200,</span><br><span class="line">    &quot;refresh_token&quot;:&quot;REFRESH_TOKEN&quot;,</span><br><span class="line">    &quot;openid&quot;:&quot;OPENID&quot;,</span><br><span class="line">    &quot;scope&quot;:&quot;SCOPE&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接口说明：access_token是调用授权关系接口的调用凭证，由于access_token有效期（目前为2个小时）较短，当access_token超时后，可以使用refresh_token进行刷新，access_token刷新结果有两种：<br>1.若access_token已超时，那么进行refresh_token会获取一个新的access_token，新的超时时间；<br>2.若access_token未超时，那么进行refresh_token不会改变access_token，但超时时间会刷新，相当于续期access_token。<br>refresh_token拥有较长的有效期（30天）且无法续期，当refresh_token失效的后，需要用户重新授权后才可以继续获取用户头像昵称。</p>
+<h3 id="获取refresh-token"><a href="#获取refresh-token" class="headerlink" title="获取refresh_token"></a>获取refresh_token</h3><p>refresh_token http请求方式: GET<br><a target="_blank" rel="noopener" href="https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=APPID&amp;grant_type=refresh_token&amp;refresh_token=REFRESH_TOKEN">https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=APPID&amp;grant_type=refresh_token&amp;refresh_token=REFRESH_TOKEN</a></p>
+<p>返回信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;access_token&quot;:&quot;ACCESS_TOKEN&quot;,</span><br><span class="line">    &quot;expires_in&quot;:7200,</span><br><span class="line">    &quot;refresh_token&quot;:&quot;REFRESH_TOKEN&quot;,</span><br><span class="line">    &quot;openid&quot;:&quot;OPENID&quot;,</span><br><span class="line">    &quot;scope&quot;:&quot;SCOPE&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证access-token是否有效"><a href="#验证access-token是否有效" class="headerlink" title="验证access_token是否有效"></a>验证access_token是否有效</h3><p>http请求方式: GET<br><a target="_blank" rel="noopener" href="https://api.weixin.qq.com/sns/auth?access_token=ACCESS_TOKEN&amp;openid=OPENID">https://api.weixin.qq.com/sns/auth?access_token=ACCESS_TOKEN&amp;openid=OPENID</a></p>
+<p>正确返回信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;errcode&quot;:0,&quot;errmsg&quot;:&quot;ok&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>错误返回信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;errcode&quot;:40003,&quot;errmsg&quot;:&quot;invalid openid&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取用户个人信息"><a href="#获取用户个人信息" class="headerlink" title="获取用户个人信息"></a>获取用户个人信息</h3><p>http请求方式: GET<br><a target="_blank" rel="noopener" href="https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&amp;openid=OPENID">https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&amp;openid=OPENID</a></p>
+<p>返回信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;openid&quot;:&quot;OPENID&quot;,</span><br><span class="line">    &quot;nickname&quot;:&quot;NICKNAME&quot;,</span><br><span class="line">    &quot;sex&quot;:1, &#x2F;&#x2F; sex 普通用户性别，1为男性，2为女性</span><br><span class="line">    &quot;province&quot;:&quot;PROVINCE&quot;,</span><br><span class="line">    &quot;city&quot;:&quot;CITY&quot;,</span><br><span class="line">    &quot;country&quot;:&quot;COUNTRY&quot;,</span><br><span class="line">    &quot;headimgurl&quot;: &quot;http:&#x2F;&#x2F;wx.qlogo.cn&#x2F;mmopen&#x2F;g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe&#x2F;0&quot;, &#x2F;&#x2F;用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空</span><br><span class="line">    &quot;privilege&quot;:[</span><br><span class="line">    &quot;PRIVILEGE1&quot;,</span><br><span class="line">    &quot;PRIVILEGE2&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;unionid&quot;: &quot; o6_bmasdasdsad6_2sgVt7hMZOPfL&quot; &#x2F;&#x2F;用户统一标识。针对一个微信开放平台帐号下的应用，同一用户的unionid是唯一的。</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">微信登录（移动端）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%8E%88%E6%9D%83%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">获取授权码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%88%E6%9D%83%E5%90%8E%EF%BC%8C%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">授权后，接口调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96access-token"><span class="toc-number">1.3.1.</span> <span class="toc-text">获取access_token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96refresh-token"><span class="toc-number">1.3.2.</span> <span class="toc-text">获取refresh_token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81access-token%E6%98%AF%E5%90%A6%E6%9C%89%E6%95%88"><span class="toc-number">1.3.3.</span> <span class="toc-text">验证access_token是否有效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF"><span class="toc-number">1.3.4.</span> <span class="toc-text">获取用户个人信息</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&text=微信登录（移动端）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&title=微信登录（移动端）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&is_video=false&description=微信登录（移动端）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=微信登录（移动端）&body=Check out this article: https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&title=微信登录（移动端）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&title=微信登录（移动端）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&title=微信登录（移动端）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&title=微信登录（移动端）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&name=微信登录（移动端）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/10/12/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95%EF%BC%88%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%89/&t=微信登录（移动端）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2017-2021
+    HandsomeHan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

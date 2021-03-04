@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="项目中遇到的一些问题1. height: 10; 或者: height: ‘10px’; 而不是 height: ‘10’2. “ ； ”使用分号时，只在css中书写时添加引号，jsx中不建议添加分号；3. map数组时return返回jsx代码时，最外层需要添加key&#x3D;{index}；1234567data.map((item, index) &#x3D;&gt; &amp;#123;    retur">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React项目常见问题">
+<meta property="og:url" content="https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="从前慢丶">
+<meta property="og:description" content="项目中遇到的一些问题1. height: 10; 或者: height: ‘10px’; 而不是 height: ‘10’2. “ ； ”使用分号时，只在css中书写时添加引号，jsx中不建议添加分号；3. map数组时return返回jsx代码时，最外层需要添加key&#x3D;{index}；1234567data.map((item, index) &#x3D;&gt; &amp;#123;    retur">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-09-06T07:23:15.000Z">
+<meta property="article:modified_time" content="2018-08-29T02:10:43.453Z">
+<meta property="article:author" content="HandsomeHan">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+        
+      
+    
+    <!-- title -->
+    <title>React项目常见问题</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/09/06/PropTypes/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/09/06/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&text=React项目常见问题"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=React项目常见问题"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&is_video=false&description=React项目常见问题"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=React项目常见问题&body=Check out this article: https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=React项目常见问题"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=React项目常见问题"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=React项目常见问题"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=React项目常见问题"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&name=React项目常见问题&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&t=React项目常见问题"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">项目中遇到的一些问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-height-10-%E6%88%96%E8%80%85-height-%E2%80%9810px%E2%80%99-%E8%80%8C%E4%B8%8D%E6%98%AF-height-%E2%80%9810%E2%80%99"><span class="toc-number">1.1.</span> <span class="toc-text">1. height: 10; 或者: height: ‘10px’; 而不是 height: ‘10’</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E2%80%9C-%EF%BC%9B-%E2%80%9D%E4%BD%BF%E7%94%A8%E5%88%86%E5%8F%B7%E6%97%B6%EF%BC%8C%E5%8F%AA%E5%9C%A8css%E4%B8%AD%E4%B9%A6%E5%86%99%E6%97%B6%E6%B7%BB%E5%8A%A0%E5%BC%95%E5%8F%B7%EF%BC%8Cjsx%E4%B8%AD%E4%B8%8D%E5%BB%BA%E8%AE%AE%E6%B7%BB%E5%8A%A0%E5%88%86%E5%8F%B7%EF%BC%9B"><span class="toc-number">1.2.</span> <span class="toc-text">2. “ ； ”使用分号时，只在css中书写时添加引号，jsx中不建议添加分号；</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-map%E6%95%B0%E7%BB%84%E6%97%B6return%E8%BF%94%E5%9B%9Ejsx%E4%BB%A3%E7%A0%81%E6%97%B6%EF%BC%8C%E6%9C%80%E5%A4%96%E5%B1%82%E9%9C%80%E8%A6%81%E6%B7%BB%E5%8A%A0key-index-%EF%BC%9B"><span class="toc-number">1.3.</span> <span class="toc-text">3. map数组时return返回jsx代码时，最外层需要添加key&#x3D;{index}；</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-for-gt-htmlFor-class-gt-className%EF%BC%9B"><span class="toc-number">1.4.</span> <span class="toc-text">4. for &#x3D;&gt; htmlFor; class &#x3D;&gt; className；</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%87%BD%E6%95%B0%E4%B9%8B%E9%97%B4%E7%94%A8%E7%A9%BA%E8%A1%8C%E7%A9%BA%E5%BC%80%EF%BC%9B%E4%B8%8D%E5%90%8C%E5%85%B1%E8%83%BD%E7%9A%84%E4%BB%A3%E7%A0%81%E5%B0%BD%E9%87%8F%E7%94%A8%E7%A9%BA%E8%A1%8C%E7%A9%BA%E5%87%BA%E6%9D%A5"><span class="toc-number">1.5.</span> <span class="toc-text">5. 函数之间用空行空开；不同共能的代码尽量用空行空出来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-defaultProps%E7%9A%84%E4%B9%A6%E5%86%99"><span class="toc-number">1.6.</span> <span class="toc-text">6. defaultProps的书写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%87%BD%E6%95%B0%E7%9A%84%E4%B9%A6%E5%86%99%E6%96%B9%E5%BC%8F"><span class="toc-number">1.7.</span> <span class="toc-text">7.函数的书写方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E5%87%BD%E6%95%B0bind%E6%B3%95"><span class="toc-number">1.7.1.</span> <span class="toc-text">方式一：函数bind法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E6%96%B9%E5%BC%8F"><span class="toc-number">1.7.2.</span> <span class="toc-text">方式二：箭头函数方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%8D%95%E8%AF%8D%E5%8F%8A%E6%8B%AC%E5%8F%B7%E7%AD%89%E4%B9%8B%E9%97%B4%E7%94%A8%E7%A9%BA%E6%A0%BC%E9%9A%94%E5%BC%80"><span class="toc-number">1.8.</span> <span class="toc-text">8.单词及括号等之间用空格隔开</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E2%80%94%E2%80%94%E2%80%93-gt"><span class="toc-number">1.8.1.</span> <span class="toc-text">9. &#x3D;&#x3D; ——–&gt; &#x3D;&#x3D;&#x3D;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-warning-Missing-radix-parameter-radix"><span class="toc-number">1.8.2.</span> <span class="toc-text">10.!!!warning Missing radix parameter  radix</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-The-Body-of-a-for-in-should-be-wrapped-in-an-if-statement-to-filter-unwanted-properties-from-the-prototype-grard-for-in"><span class="toc-number">1.8.3.</span> <span class="toc-text">11.The Body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype grard-for-in</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-Do-not-mutate-state-directly-Use-setState-react-no-direct-mutation-state"><span class="toc-number">1.8.4.</span> <span class="toc-text">12. Do not mutate state directly. Use setState react&#x2F;no-direct-mutation-state</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        React项目常见问题
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">HandsomeHan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-09-06T07:23:15.000Z" itemprop="datePublished">2017-09-06</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/JavaScript/">JavaScript</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/React/" rel="tag">React</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="项目中遇到的一些问题"><a href="#项目中遇到的一些问题" class="headerlink" title="项目中遇到的一些问题"></a>项目中遇到的一些问题</h1><h2 id="1-height-10-或者-height-‘10px’-而不是-height-‘10’"><a href="#1-height-10-或者-height-‘10px’-而不是-height-‘10’" class="headerlink" title="1. height: 10; 或者: height: ‘10px’; 而不是 height: ‘10’"></a>1. height: 10; 或者: height: ‘10px’; 而不是 height: ‘10’</h2><h2 id="2-“-；-”使用分号时，只在css中书写时添加引号，jsx中不建议添加分号；"><a href="#2-“-；-”使用分号时，只在css中书写时添加引号，jsx中不建议添加分号；" class="headerlink" title="2. “ ； ”使用分号时，只在css中书写时添加引号，jsx中不建议添加分号；"></a>2. “ ； ”使用分号时，只在css中书写时添加引号，jsx中不建议添加分号；</h2><h2 id="3-map数组时return返回jsx代码时，最外层需要添加key-index-；"><a href="#3-map数组时return返回jsx代码时，最外层需要添加key-index-；" class="headerlink" title="3. map数组时return返回jsx代码时，最外层需要添加key={index}；"></a>3. map数组时return返回jsx代码时，最外层需要添加key={index}；</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data.map((item, index) &#x3D;&gt; &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;div key&#x3D;&#123;index&#125;&gt;</span><br><span class="line">            &#123;content&#125;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="4-for-gt-htmlFor-class-gt-className；"><a href="#4-for-gt-htmlFor-class-gt-className；" class="headerlink" title="4. for =&gt; htmlFor; class =&gt; className；"></a>4. for =&gt; htmlFor; class =&gt; className；</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;label htmlFor&#x3D;&#39;example&#39;&gt;&lt;&#x2F;label&gt;</span><br><span class="line">&lt;input id&#x3D;&#39;example&#39; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="5-函数之间用空行空开；不同共能的代码尽量用空行空出来"><a href="#5-函数之间用空行空开；不同共能的代码尽量用空行空出来" class="headerlink" title="5. 函数之间用空行空开；不同共能的代码尽量用空行空出来"></a>5. 函数之间用空行空开；不同共能的代码尽量用空行空出来</h2><h2 id="6-defaultProps的书写"><a href="#6-defaultProps的书写" class="headerlink" title="6. defaultProps的书写"></a>6. defaultProps的书写</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class DrawingBoard extends Component &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DrawingBoard.propTypes &#x3D; &#123;</span><br><span class="line">    height: React.PropTypes.number,</span><br><span class="line">    width: React.PropTypes.number,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DrawingBoard.defaultPorps &#x3D; &#123;</span><br><span class="line">    height: 10,</span><br><span class="line">    width: 20,s</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default DrawingBoard</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-函数的书写方式"><a href="#7-函数的书写方式" class="headerlink" title="7.函数的书写方式"></a>7.函数的书写方式</h2><h3 id="方式一：函数bind法"><a href="#方式一：函数bind法" class="headerlink" title="方式一：函数bind法"></a>方式一：函数bind法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class AttendClass extends Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">        super(props)</span><br><span class="line">        </span><br><span class="line">        this.select &#x3D; this.select.bind(this)</span><br><span class="line">        this.delete &#x3D; this.delete.bind(this)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    select() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    delete() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    render() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方式二：箭头函数方式"><a href="#方式二：箭头函数方式" class="headerlink" title="方式二：箭头函数方式"></a>方式二：箭头函数方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class AttendClass extends Component &#123;</span><br><span class="line">    select &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    delete &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    render() &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-单词及括号等之间用空格隔开"><a href="#8-单词及括号等之间用空格隔开" class="headerlink" title="8.单词及括号等之间用空格隔开"></a>8.单词及括号等之间用空格隔开</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (this.props.display &#x3D;&#x3D;&#x3D; true) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const &#123; tasks, subTasks, units &#125; &#x3D; this.props</span><br></pre></td></tr></table></figure>
+<h3 id="9-——–-gt"><a href="#9-——–-gt" class="headerlink" title="9. == ——–&gt; ==="></a>9. == ——–&gt; ===</h3><h3 id="10-warning-Missing-radix-parameter-radix"><a href="#10-warning-Missing-radix-parameter-radix" class="headerlink" title="10.!!!warning Missing radix parameter  radix"></a>10.!!!warning Missing radix parameter  radix</h3><pre><code>parsetInt(&#39;string&#39;, radix)
+
+radix是一个数字，表示几进制数字，为必填项。
+</code></pre>
+<h3 id="11-The-Body-of-a-for-in-should-be-wrapped-in-an-if-statement-to-filter-unwanted-properties-from-the-prototype-grard-for-in"><a href="#11-The-Body-of-a-for-in-should-be-wrapped-in-an-if-statement-to-filter-unwanted-properties-from-the-prototype-grard-for-in" class="headerlink" title="11.The Body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype grard-for-in"></a>11.The Body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype grard-for-in</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (let i in datas) &#123;</span><br><span class="line">    if (datas.hasOwnProperty(i) &#123;</span><br><span class="line">        console.log(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="12-Do-not-mutate-state-directly-Use-setState-react-no-direct-mutation-state"><a href="#12-Do-not-mutate-state-directly-Use-setState-react-no-direct-mutation-state" class="headerlink" title="12. Do not mutate state directly. Use setState react/no-direct-mutation-state"></a>12. Do not mutate state directly. Use setState react/no-direct-mutation-state</h3><pre><code>this.state.example 不能直接操作，要修改state，只能通过setState()来修改。
+</code></pre>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">项目中遇到的一些问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-height-10-%E6%88%96%E8%80%85-height-%E2%80%9810px%E2%80%99-%E8%80%8C%E4%B8%8D%E6%98%AF-height-%E2%80%9810%E2%80%99"><span class="toc-number">1.1.</span> <span class="toc-text">1. height: 10; 或者: height: ‘10px’; 而不是 height: ‘10’</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E2%80%9C-%EF%BC%9B-%E2%80%9D%E4%BD%BF%E7%94%A8%E5%88%86%E5%8F%B7%E6%97%B6%EF%BC%8C%E5%8F%AA%E5%9C%A8css%E4%B8%AD%E4%B9%A6%E5%86%99%E6%97%B6%E6%B7%BB%E5%8A%A0%E5%BC%95%E5%8F%B7%EF%BC%8Cjsx%E4%B8%AD%E4%B8%8D%E5%BB%BA%E8%AE%AE%E6%B7%BB%E5%8A%A0%E5%88%86%E5%8F%B7%EF%BC%9B"><span class="toc-number">1.2.</span> <span class="toc-text">2. “ ； ”使用分号时，只在css中书写时添加引号，jsx中不建议添加分号；</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-map%E6%95%B0%E7%BB%84%E6%97%B6return%E8%BF%94%E5%9B%9Ejsx%E4%BB%A3%E7%A0%81%E6%97%B6%EF%BC%8C%E6%9C%80%E5%A4%96%E5%B1%82%E9%9C%80%E8%A6%81%E6%B7%BB%E5%8A%A0key-index-%EF%BC%9B"><span class="toc-number">1.3.</span> <span class="toc-text">3. map数组时return返回jsx代码时，最外层需要添加key&#x3D;{index}；</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-for-gt-htmlFor-class-gt-className%EF%BC%9B"><span class="toc-number">1.4.</span> <span class="toc-text">4. for &#x3D;&gt; htmlFor; class &#x3D;&gt; className；</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%87%BD%E6%95%B0%E4%B9%8B%E9%97%B4%E7%94%A8%E7%A9%BA%E8%A1%8C%E7%A9%BA%E5%BC%80%EF%BC%9B%E4%B8%8D%E5%90%8C%E5%85%B1%E8%83%BD%E7%9A%84%E4%BB%A3%E7%A0%81%E5%B0%BD%E9%87%8F%E7%94%A8%E7%A9%BA%E8%A1%8C%E7%A9%BA%E5%87%BA%E6%9D%A5"><span class="toc-number">1.5.</span> <span class="toc-text">5. 函数之间用空行空开；不同共能的代码尽量用空行空出来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-defaultProps%E7%9A%84%E4%B9%A6%E5%86%99"><span class="toc-number">1.6.</span> <span class="toc-text">6. defaultProps的书写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%87%BD%E6%95%B0%E7%9A%84%E4%B9%A6%E5%86%99%E6%96%B9%E5%BC%8F"><span class="toc-number">1.7.</span> <span class="toc-text">7.函数的书写方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E5%87%BD%E6%95%B0bind%E6%B3%95"><span class="toc-number">1.7.1.</span> <span class="toc-text">方式一：函数bind法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E6%96%B9%E5%BC%8F"><span class="toc-number">1.7.2.</span> <span class="toc-text">方式二：箭头函数方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%8D%95%E8%AF%8D%E5%8F%8A%E6%8B%AC%E5%8F%B7%E7%AD%89%E4%B9%8B%E9%97%B4%E7%94%A8%E7%A9%BA%E6%A0%BC%E9%9A%94%E5%BC%80"><span class="toc-number">1.8.</span> <span class="toc-text">8.单词及括号等之间用空格隔开</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E2%80%94%E2%80%94%E2%80%93-gt"><span class="toc-number">1.8.1.</span> <span class="toc-text">9. &#x3D;&#x3D; ——–&gt; &#x3D;&#x3D;&#x3D;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-warning-Missing-radix-parameter-radix"><span class="toc-number">1.8.2.</span> <span class="toc-text">10.!!!warning Missing radix parameter  radix</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-The-Body-of-a-for-in-should-be-wrapped-in-an-if-statement-to-filter-unwanted-properties-from-the-prototype-grard-for-in"><span class="toc-number">1.8.3.</span> <span class="toc-text">11.The Body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype grard-for-in</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-Do-not-mutate-state-directly-Use-setState-react-no-direct-mutation-state"><span class="toc-number">1.8.4.</span> <span class="toc-text">12. Do not mutate state directly. Use setState react&#x2F;no-direct-mutation-state</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&text=React项目常见问题"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=React项目常见问题"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&is_video=false&description=React项目常见问题"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=React项目常见问题&body=Check out this article: https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=React项目常见问题"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=React项目常见问题"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=React项目常见问题"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=React项目常见问题"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&name=React项目常见问题&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/09/06/React%E9%A1%B9%E7%9B%AE%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&t=React项目常见问题"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2017-2021
+    HandsomeHan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

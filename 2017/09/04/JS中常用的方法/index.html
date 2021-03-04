@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="JS中常用的一些方法数组数组对象的作用是:使用单独的变量名来存储一系列的值  数组常用的方法及属性： arr.length; 获取值 var a &#x3D; arr[0]; 给数组赋新值 arr[1] &#x3D; ‘新值’; 将新元素添加到数组末尾，并返回新数组的长度–&gt;arr.push(a,b,c,d,e…); 将新元素添加到数组开始，并返回新数组的长度–&gt;arr.unshift(a,b,c,d,e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS中常用的方法">
+<meta property="og:url" content="https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="从前慢丶">
+<meta property="og:description" content="JS中常用的一些方法数组数组对象的作用是:使用单独的变量名来存储一系列的值  数组常用的方法及属性： arr.length; 获取值 var a &#x3D; arr[0]; 给数组赋新值 arr[1] &#x3D; ‘新值’; 将新元素添加到数组末尾，并返回新数组的长度–&gt;arr.push(a,b,c,d,e…); 将新元素添加到数组开始，并返回新数组的长度–&gt;arr.unshift(a,b,c,d,e">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-09-04T11:22:21.000Z">
+<meta property="article:modified_time" content="2018-08-29T02:10:43.452Z">
+<meta property="article:author" content="HandsomeHan">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+        
+      
+    
+    <!-- title -->
+    <title>JS中常用的方法</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/09/04/Redux/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&text=JS中常用的方法"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&title=JS中常用的方法"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&is_video=false&description=JS中常用的方法"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=JS中常用的方法&body=Check out this article: https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&title=JS中常用的方法"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&title=JS中常用的方法"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&title=JS中常用的方法"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&title=JS中常用的方法"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&name=JS中常用的方法&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&t=JS中常用的方法"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">JS中常用的一些方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-number">1.1.</span> <span class="toc-text">数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%8A%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">1.1.1.</span> <span class="toc-text">数组常用的方法及属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%82%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E5%B7%AE%E9%9B%86"><span class="toc-number">1.1.2.</span> <span class="toc-text">求两个数组的差集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%8E%BB%E9%99%A4%E9%87%8D%E5%A4%8D%E9%A1%B9%E8%BF%94%E5%9B%9E%E6%96%B0%E6%95%B0%E7%BB%84"><span class="toc-number">1.1.3.</span> <span class="toc-text">数组去除重复项返回新数组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86%E7%BB%99%E5%AF%B9%E8%B1%A1%E4%B8%AD%E7%9A%84key%E8%AE%BE%E7%BD%AE%E4%B8%BA%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">将给对象中的key设置为变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%89%E7%A7%8D%E6%B8%85%E7%A9%BA%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">常用的三种清空数组的方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A-splice"><span class="toc-number">1.3.1.</span> <span class="toc-text">方式一： splice()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A-length%E8%B5%8B%E5%80%BC%E4%B8%BA0"><span class="toc-number">1.3.2.</span> <span class="toc-text">方式二： length赋值为0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9A-%E8%B5%8B%E5%80%BC%E4%B8%BA%E7%A9%BA%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.3.</span> <span class="toc-text">方式三： 赋值为空数组</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        JS中常用的方法
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">HandsomeHan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-09-04T11:22:21.000Z" itemprop="datePublished">2017-09-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/JavaScript/">JavaScript</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="JS中常用的一些方法"><a href="#JS中常用的一些方法" class="headerlink" title="JS中常用的一些方法"></a>JS中常用的一些方法</h1><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><pre><code>数组对象的作用是:使用单独的变量名来存储一系列的值
+</code></pre>
+<h3 id="数组常用的方法及属性："><a href="#数组常用的方法及属性：" class="headerlink" title="数组常用的方法及属性："></a>数组常用的方法及属性：</h3><ul>
+<li>arr.length;</li>
+<li>获取值 var a = arr[0];</li>
+<li>给数组赋新值 arr[1] = ‘新值’;</li>
+<li>将新元素添加到数组末尾，并返回新数组的长度–&gt;arr.push(a,b,c,d,e…);</li>
+<li>将新元素添加到数组开始，并返回新数组的长度–&gt;arr.unshift(a,b,c,d,e…);</li>
+<li>删除数组的最后一项，并返回被删除的元素–&gt;arr.pop();</li>
+<li>删除数字第一个元素，并返回被删除的元素–&gt;arr.shift();</li>
+<li>arr.splice(1,2)–&gt;从1的位置开始（包含1）向后删除两个元素，数组形式返回所移除的元素</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var arr &#x3D; [1,2,3,4,5,6,7];</span><br><span class="line">var arr2 &#x3D; arr.splice(1,2);</span><br><span class="line">console.log(&#39;arr:%o, arr2: %o&#39;, arr, arr2) &#x2F;&#x2F; arr: [1,4,5,6,7]   arr2: [2,3]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>arr.splice(1,2,a,b)可以在删除的位置添加元素</li>
+<li>slice(start,end)–&gt;以数组的形式返回数组的一部分，不包括end位置的元素，如果省略end将复制start及之后的所有元素；</li>
+<li>join(‘分隔符’)用数组的元素组成字符串，arr.join(‘%’) –&gt; 1%2%3%4…</li>
+<li>concat()方法用于合并数组并返回一个新数组；</li>
+<li>arr.reverse()将数组翻转（倒过来显示）</li>
+<li>sort()文字数组从字面上对数组进行排序;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort(function (a,b) &#123; return a - b;&#125;)--&gt; 数字数组按值排序</span><br></pre></td></tr></table></figure></li>
+<li>for in →用来循环输出数组中的元素<h3 id="求两个数组的差集"><a href="#求两个数组的差集" class="headerlink" title="求两个数组的差集"></a>求两个数组的差集</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let a &#x3D; [1, 2, 3];</span><br><span class="line">let b &#x3D; [2, 3];</span><br><span class="line">let c &#x3D; a.filter(key &#x3D;&gt; !b.includes(key))</span><br><span class="line">console.log(c) &#x2F;&#x2F; [1]</span><br></pre></td></tr></table></figure>
+<h3 id="数组去除重复项返回新数组"><a href="#数组去除重复项返回新数组" class="headerlink" title="数组去除重复项返回新数组"></a>数组去除重复项返回新数组</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var arr &#x3D; [1,2,3,3,3,2]</span><br><span class="line">arr &#x3D; [...new Set(arr)]</span><br><span class="line">console.log(arr) &#x2F;&#x2F; [1,2,3]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><h3 id="将给对象中的key设置为变量"><a href="#将给对象中的key设置为变量" class="headerlink" title="将给对象中的key设置为变量"></a>将给对象中的key设置为变量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var e &#x3D; &#39;han&#39;</span><br><span class="line">var dd &#x3D; &#123;[&#96;name$&#123;e&#125;&#96;]: 222&#125;</span><br><span class="line">console.log(dd) &#x2F;&#x2F; namehan: 222</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用的三种清空数组的方式"><a href="#常用的三种清空数组的方式" class="headerlink" title="常用的三种清空数组的方式"></a>常用的三种清空数组的方式</h2><h3 id="方式一：-splice"><a href="#方式一：-splice" class="headerlink" title="方式一： splice()"></a>方式一： splice()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const arr &#x3D; [1, 2, 3, 4]</span><br><span class="line">arr.splice(0, arr.length)</span><br><span class="line">console.log(arrr)</span><br></pre></td></tr></table></figure>
+<h3 id="方式二：-length赋值为0"><a href="#方式二：-length赋值为0" class="headerlink" title="方式二： length赋值为0"></a>方式二： length赋值为0</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const arr &#x3D; [1, 2, 3, 4]</span><br><span class="line">arr.length &#x3D; 0</span><br><span class="line">console.log(arr)</span><br></pre></td></tr></table></figure>
+<h3 id="方式三：-赋值为空数组"><a href="#方式三：-赋值为空数组" class="headerlink" title="方式三： 赋值为空数组"></a>方式三： 赋值为空数组</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const arr &#x3D; [1, 2, 3,4]</span><br><span class="line">arr &#x3D; []</span><br><span class="line">console.log(arr)</span><br></pre></td></tr></table></figure>
+
+
+<p>————————————————– 待续</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">JS中常用的一些方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-number">1.1.</span> <span class="toc-text">数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%8A%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">1.1.1.</span> <span class="toc-text">数组常用的方法及属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%82%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E5%B7%AE%E9%9B%86"><span class="toc-number">1.1.2.</span> <span class="toc-text">求两个数组的差集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%8E%BB%E9%99%A4%E9%87%8D%E5%A4%8D%E9%A1%B9%E8%BF%94%E5%9B%9E%E6%96%B0%E6%95%B0%E7%BB%84"><span class="toc-number">1.1.3.</span> <span class="toc-text">数组去除重复项返回新数组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86%E7%BB%99%E5%AF%B9%E8%B1%A1%E4%B8%AD%E7%9A%84key%E8%AE%BE%E7%BD%AE%E4%B8%BA%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">将给对象中的key设置为变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%89%E7%A7%8D%E6%B8%85%E7%A9%BA%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">常用的三种清空数组的方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A-splice"><span class="toc-number">1.3.1.</span> <span class="toc-text">方式一： splice()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A-length%E8%B5%8B%E5%80%BC%E4%B8%BA0"><span class="toc-number">1.3.2.</span> <span class="toc-text">方式二： length赋值为0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9A-%E8%B5%8B%E5%80%BC%E4%B8%BA%E7%A9%BA%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.3.</span> <span class="toc-text">方式三： 赋值为空数组</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&text=JS中常用的方法"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&title=JS中常用的方法"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&is_video=false&description=JS中常用的方法"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=JS中常用的方法&body=Check out this article: https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&title=JS中常用的方法"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&title=JS中常用的方法"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&title=JS中常用的方法"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&title=JS中常用的方法"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&name=JS中常用的方法&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/&t=JS中常用的方法"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2017-2021
+    HandsomeHan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

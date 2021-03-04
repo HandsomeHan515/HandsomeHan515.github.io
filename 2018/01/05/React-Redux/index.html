@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="actions.js123456789101112&#x2F;&#x2F;action 创建函数const action &#x3D; (type, payload &#x3D; &amp;#123;&amp;#125;) &#x3D;&gt; (&amp;#123; type, payload &amp;#125;);export const GET_ADS &#x3D; &#39;GET_ADS&#39;;export co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React+Redux">
+<meta property="og:url" content="https://handsomehan.cn/2018/01/05/React-Redux/index.html">
+<meta property="og:site_name" content="从前慢丶">
+<meta property="og:description" content="actions.js123456789101112&#x2F;&#x2F;action 创建函数const action &#x3D; (type, payload &#x3D; &amp;#123;&amp;#125;) &#x3D;&gt; (&amp;#123; type, payload &amp;#125;);export const GET_ADS &#x3D; &#39;GET_ADS&#39;;export co">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-01-05T08:26:51.000Z">
+<meta property="article:modified_time" content="2018-08-29T02:10:43.453Z">
+<meta property="article:author" content="HandsomeHan">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+        
+      
+    
+    <!-- title -->
+    <title>React+Redux</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/01/06/Redux-Saga/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/12/26/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2018/01/05/React-Redux/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2018/01/05/React-Redux/&text=React+Redux"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2018/01/05/React-Redux/&title=React+Redux"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2018/01/05/React-Redux/&is_video=false&description=React+Redux"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=React+Redux&body=Check out this article: https://handsomehan.cn/2018/01/05/React-Redux/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2018/01/05/React-Redux/&title=React+Redux"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2018/01/05/React-Redux/&title=React+Redux"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2018/01/05/React-Redux/&title=React+Redux"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2018/01/05/React-Redux/&title=React+Redux"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2018/01/05/React-Redux/&name=React+Redux&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2018/01/05/React-Redux/&t=React+Redux"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#actions-js"><span class="toc-number">1.</span> <span class="toc-text">actions.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reducers-js"><span class="toc-number">2.</span> <span class="toc-text">reducers.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#data-js"><span class="toc-number">3.</span> <span class="toc-text">data.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#store-js"><span class="toc-number">4.</span> <span class="toc-text">store.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#index-js"><span class="toc-number">5.</span> <span class="toc-text">index.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ad-js"><span class="toc-number">6.</span> <span class="toc-text">Ad.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#package-json"><span class="toc-number">7.</span> <span class="toc-text">package.json</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        React+Redux
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">HandsomeHan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-01-05T08:26:51.000Z" itemprop="datePublished">2018-01-05</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/JavaScript/">JavaScript</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/React/" rel="tag">React</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="actions-js"><a href="#actions-js" class="headerlink" title="actions.js"></a>actions.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;action 创建函数</span><br><span class="line">const action &#x3D; (type, payload &#x3D; &#123;&#125;) &#x3D;&gt; (&#123; type, payload &#125;);</span><br><span class="line"></span><br><span class="line">export const GET_ADS &#x3D; &#39;GET_ADS&#39;;</span><br><span class="line">export const ADD_ADS &#x3D; &#39;ADD_ADS&#39;;</span><br><span class="line">export const UPDATE_ADS &#x3D; &#39;UPDATE_ADS&#39;;</span><br><span class="line">export const DEL_ADS &#x3D; &#39;DEL_ADS&#39;;</span><br><span class="line"></span><br><span class="line">export const getAds &#x3D; () &#x3D;&gt; action(GET_ADS);</span><br><span class="line">export const addAds &#x3D; payload &#x3D;&gt; action(ADD_ADS, payload);</span><br><span class="line">export const updateAds &#x3D; payload &#x3D;&gt; action(UPDATE_ADS, payload);</span><br><span class="line">export const delAds &#x3D; payload &#x3D;&gt; action(DEL_ADS, payload);</span><br></pre></td></tr></table></figure>
+
+<h3 id="reducers-js"><a href="#reducers-js" class="headerlink" title="reducers.js"></a>reducers.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">import &#123; combineReducers &#125; from &#39;redux&#39;;</span><br><span class="line">import * as actionTypes from &#39;.&#x2F;actions&#39;;</span><br><span class="line"></span><br><span class="line">export const adsResults &#x3D; (state &#x3D; [], action) &#x3D;&gt; &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case actionTypes.GET_ADS:</span><br><span class="line">      return [</span><br><span class="line">        ...state,</span><br><span class="line">        action.payload</span><br><span class="line">      ]</span><br><span class="line"></span><br><span class="line">    case actionTypes.ADD_ADS:</span><br><span class="line">      return [</span><br><span class="line">        ...state,</span><br><span class="line">        action.payload.id</span><br><span class="line">      ]</span><br><span class="line"></span><br><span class="line">    case actionTypes.DEL_ADS:</span><br><span class="line">      let newData &#x3D; state.slice()</span><br><span class="line">      return newData.filter(item &#x3D;&gt; item !&#x3D;&#x3D; action.payload.id)</span><br><span class="line"></span><br><span class="line">    default:</span><br><span class="line">      return state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export const adsEntities &#x3D; (state &#x3D; &#123;&#125;, action) &#x3D;&gt; &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case actionTypes.GET_ADS:</span><br><span class="line">      return Object.assign(state, action.payload)</span><br><span class="line"></span><br><span class="line">    case actionTypes.ADD_ADS:</span><br><span class="line">      return Object.assign(state, &#123;</span><br><span class="line">        [action.payload.id]: action.payload</span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line">    case actionTypes.UPDATE_ADS:</span><br><span class="line">      &#x2F;&#x2F; Why? 使用Object.assign()redu中的数据该表，但是界面不渲染</span><br><span class="line">      &#x2F;&#x2F; return Object.assign(state, &#123;</span><br><span class="line">      &#x2F;&#x2F;   [action.payload.id]: action.payload</span><br><span class="line">      &#x2F;&#x2F; &#125;)</span><br><span class="line">      return &#123;</span><br><span class="line">        ...state,</span><br><span class="line">        [action.payload.id]: action.payload</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    default:</span><br><span class="line">      return state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const result &#x3D; combineReducers(&#123;</span><br><span class="line">  ads: adsResults,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const entities &#x3D; combineReducers(&#123;</span><br><span class="line">  ads: adsEntities,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export default combineReducers(&#123;</span><br><span class="line">  result,</span><br><span class="line">  entities,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export const combineData &#x3D; (result, entities) &#x3D;&gt; (result.map(item &#x3D;&gt; entities[item]))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="data-js"><a href="#data-js" class="headerlink" title="data.js"></a>data.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">export const ads &#x3D; [</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;id&quot;: 1,</span><br><span class="line">    &quot;image&quot;: &quot;http:&#x2F;&#x2F;api.handsomehan.cn:10013&#x2F;media&#x2F;20111009043132953_4NWLIlb.jpg&quot;,</span><br><span class="line">    &quot;title&quot;: &quot;月季花&quot;,</span><br><span class="line">    &quot;description&quot;: null,</span><br><span class="line">    &quot;page_view&quot;: 0</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;id&quot;: 2,</span><br><span class="line">    &quot;image&quot;: &quot;http:&#x2F;&#x2F;api.handsomehan.cn:10013&#x2F;media&#x2F;tooopen_sy_121089197226_awrU7X6.jpg&quot;,</span><br><span class="line">    &quot;title&quot;: &quot;花&quot;,</span><br><span class="line">    &quot;description&quot;: null,</span><br><span class="line">    &quot;page_view&quot;: 0</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="store-js"><a href="#store-js" class="headerlink" title="store.js"></a>store.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import &#123; normalize, schema &#125; from &#39;normalizr&#39;;</span><br><span class="line"></span><br><span class="line">import &#123; ads &#125; from &#39;..&#x2F;data&#39;;</span><br><span class="line"></span><br><span class="line">const data &#x3D; &#123;</span><br><span class="line">  ads: ads,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export const adSchema &#x3D; new schema.Entity(&#39;ads&#39;);</span><br><span class="line"></span><br><span class="line">export const stateSchema &#x3D; &#123;</span><br><span class="line">  ads: [adSchema],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export const initialState &#x3D; normalize(data, stateSchema)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import React from &#39;react&#39;;</span><br><span class="line">import ReactDOM from &#39;react-dom&#39;;</span><br><span class="line">import &#39;.&#x2F;index.css&#39;;</span><br><span class="line">import Ad from &#39;.&#x2F;Ad&#39;;</span><br><span class="line">import registerServiceWorker from &#39;.&#x2F;registerServiceWorker&#39;;</span><br><span class="line"></span><br><span class="line">import &#123; Provider &#125; from &#39;react-redux&#39;;</span><br><span class="line">import &#123; createStore &#125; from &#39;redux&#39;;</span><br><span class="line">import reducer from &#39;.&#x2F;reducers&#39;;</span><br><span class="line"></span><br><span class="line">import &#123; initialState &#125; from &#39;.&#x2F;store&#39;;</span><br><span class="line"></span><br><span class="line">export const store &#x3D; createStore(</span><br><span class="line">  reducer,</span><br><span class="line">  initialState,</span><br><span class="line">  window.__REDUX_DEVTOOLS_EXTENSION__ &amp;&amp; window.__REDUX_DEVTOOLS_EXTENSION__()</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;Provider store&#x3D;&#123;store&#125;&gt;</span><br><span class="line">    &lt;Ad &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;Provider&gt;</span><br><span class="line">  , document.getElementById(&#39;root&#39;));</span><br><span class="line">registerServiceWorker();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Ad-js"><a href="#Ad-js" class="headerlink" title="Ad.js"></a>Ad.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &#39;react&#39;;</span><br><span class="line">import &#123; bindActionCreators &#125; from &#39;redux&#39;;</span><br><span class="line">import &#123; connect &#125; from &#39;react-redux&#39;;</span><br><span class="line"></span><br><span class="line">import &#123; getAds, addAds, delAds, updateAds &#125; from &#39;.&#x2F;actions&#39;;</span><br><span class="line">import &#123; combineData &#125; from &#39;.&#x2F;reducers&#39;;</span><br><span class="line"></span><br><span class="line">class Ad extends Component &#123;</span><br><span class="line">  AddAd &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    const payload &#x3D; &#123;</span><br><span class="line">      id: this.props.adsResult.length + 1,</span><br><span class="line">      title: &#39;多肉植物&#39;,</span><br><span class="line">      description: &#39;我会一朵🌺 ，可爱的🌺 。&#39;,</span><br><span class="line">      image: &#39;http:&#x2F;&#x2F;api.handsomehan.cn:10013&#x2F;media&#x2F;20111009043132953_4NWLIlb.jpg&#39;,</span><br><span class="line">      page_view: 0,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    this.props.addAds(payload)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  delAd &#x3D; item &#x3D;&gt; &#123;</span><br><span class="line">    this.props.delAds(item)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  updateAd &#x3D; item &#x3D;&gt; &#123;</span><br><span class="line">    const payload &#x3D; &#123;</span><br><span class="line">      id: item.id,</span><br><span class="line">      title: &#39;睡莲&#39;,</span><br><span class="line">      description: &#39;我会一朵🌺 ，可爱的🌺 。&#39;,</span><br><span class="line">      image: &#39;http:&#x2F;&#x2F;api.handsomehan.cn:10013&#x2F;media&#x2F;20111009043132953_4NWLIlb.jpg&#39;,</span><br><span class="line">      page_view: 0,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    this.props.updateAds(payload)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    const &#123; adsResult, adsEntities &#125; &#x3D; this.props</span><br><span class="line">    const ads &#x3D; combineData(adsResult, adsEntities)</span><br><span class="line"></span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123;</span><br><span class="line">          ads.map(item &#x3D;&gt; &#123;</span><br><span class="line">            return (</span><br><span class="line">              &lt;div key&#x3D;&#123;item.id&#125;&gt;</span><br><span class="line">                &lt;div&gt;</span><br><span class="line">                  &#123;item.title&#125;</span><br><span class="line">                  &#123;item.description&#125;</span><br><span class="line">                &lt;&#x2F;div&gt;</span><br><span class="line">                &lt;img style&#x3D;&#123;&#123; height: 180, width: 300 &#125;&#125; src&#x3D;&#123;item.image&#125; alt&#x3D;&#123;item.title&#125; &#x2F;&gt;</span><br><span class="line">                &lt;button onClick&#x3D;&#123;() &#x3D;&gt; this.delAd(item)&#125;&gt;删除&lt;&#x2F;button&gt;</span><br><span class="line">                &lt;button onClick&#x3D;&#123;() &#x3D;&gt; this.updateAd(item)&#125;&gt;更新&lt;&#x2F;button&gt;</span><br><span class="line">              &lt;&#x2F;div&gt;</span><br><span class="line">            )</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        &lt;button onClick&#x3D;&#123;this.AddAd&#125;&gt;添加广告&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const mapStateToProps &#x3D; state &#x3D;&gt; &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    adsResult: state.result.ads,</span><br><span class="line">    adsEntities: state.entities.ads,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const mapDispatchToProps &#x3D; dispatch &#x3D;&gt; &#123;</span><br><span class="line">  return bindActionCreators(&#123;</span><br><span class="line">    getAds,</span><br><span class="line">    addAds,</span><br><span class="line">    delAds,</span><br><span class="line">    updateAds,</span><br><span class="line">  &#125;, dispatch)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default connect(</span><br><span class="line">  mapStateToProps,</span><br><span class="line">  mapDispatchToProps</span><br><span class="line">)(Ad)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;flower&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.1.0&quot;,</span><br><span class="line">  &quot;private&quot;: true,</span><br><span class="line">  &quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;react-scripts&quot;: &quot;1.0.17&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;normalizr&quot;: &quot;^3.2.4&quot;,</span><br><span class="line">    &quot;react&quot;: &quot;^16.2.0&quot;,</span><br><span class="line">    &quot;react-dom&quot;: &quot;^16.2.0&quot;,</span><br><span class="line">    &quot;react-redux&quot;: &quot;^5.0.6&quot;,</span><br><span class="line">    &quot;redux&quot;: &quot;^3.7.2&quot;,</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;start&quot;: &quot;react-scripts start&quot;,</span><br><span class="line">    &quot;build&quot;: &quot;react-scripts build&quot;,</span><br><span class="line">    &quot;test&quot;: &quot;react-scripts test --env&#x3D;jsdom&quot;,</span><br><span class="line">    &quot;eject&quot;: &quot;react-scripts eject&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#actions-js"><span class="toc-number">1.</span> <span class="toc-text">actions.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reducers-js"><span class="toc-number">2.</span> <span class="toc-text">reducers.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#data-js"><span class="toc-number">3.</span> <span class="toc-text">data.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#store-js"><span class="toc-number">4.</span> <span class="toc-text">store.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#index-js"><span class="toc-number">5.</span> <span class="toc-text">index.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ad-js"><span class="toc-number">6.</span> <span class="toc-text">Ad.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#package-json"><span class="toc-number">7.</span> <span class="toc-text">package.json</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2018/01/05/React-Redux/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2018/01/05/React-Redux/&text=React+Redux"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2018/01/05/React-Redux/&title=React+Redux"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2018/01/05/React-Redux/&is_video=false&description=React+Redux"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=React+Redux&body=Check out this article: https://handsomehan.cn/2018/01/05/React-Redux/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2018/01/05/React-Redux/&title=React+Redux"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2018/01/05/React-Redux/&title=React+Redux"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2018/01/05/React-Redux/&title=React+Redux"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2018/01/05/React-Redux/&title=React+Redux"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2018/01/05/React-Redux/&name=React+Redux&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2018/01/05/React-Redux/&t=React+Redux"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2017-2021
+    HandsomeHan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="React-Redux一、认识Redux安装npm install --save redux npm install --save react-redux  一句话理解Redux应用中的所有state都以一个对象数树的方式存储在一个单一的store中，唯一改变state的方法就是触发action，一个描述发生什么的对象，为了描述action如何改变state树，需要编写reducers。  什么是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redux">
+<meta property="og:url" content="https://handsomehan.cn/2017/09/04/Redux/index.html">
+<meta property="og:site_name" content="从前慢丶">
+<meta property="og:description" content="React-Redux一、认识Redux安装npm install --save redux npm install --save react-redux  一句话理解Redux应用中的所有state都以一个对象数树的方式存储在一个单一的store中，唯一改变state的方法就是触发action，一个描述发生什么的对象，为了描述action如何改变state树，需要编写reducers。  什么是">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-09-04T07:38:38.000Z">
+<meta property="article:modified_time" content="2018-08-29T02:10:43.454Z">
+<meta property="article:author" content="HandsomeHan">
+<meta property="article:tag" content="Redux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+        
+      
+    
+    <!-- title -->
+    <title>Redux</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/09/04/Saga/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/09/04/Redux/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/09/04/Redux/&text=Redux"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/09/04/Redux/&title=Redux"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/09/04/Redux/&is_video=false&description=Redux"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Redux&body=Check out this article: https://handsomehan.cn/2017/09/04/Redux/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/09/04/Redux/&title=Redux"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/09/04/Redux/&title=Redux"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/09/04/Redux/&title=Redux"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/09/04/Redux/&title=Redux"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/09/04/Redux/&name=Redux&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/09/04/Redux/&t=Redux"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#React-Redux"><span class="toc-number">1.</span> <span class="toc-text">React-Redux</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AE%A4%E8%AF%86Redux"><span class="toc-number">1.1.</span> <span class="toc-text">一、认识Redux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%90%86%E8%A7%A3Redux"><span class="toc-number">1.1.2.</span> <span class="toc-text">一句话理解Redux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFAction%EF%BC%9F"><span class="toc-number">1.1.3.</span> <span class="toc-text">什么是Action？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFReducer%EF%BC%9F"><span class="toc-number">1.1.4.</span> <span class="toc-text">什么是Reducer？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E4%BA%8ERedux%E7%9A%84%E9%87%8D%E7%82%B9%E7%9F%A5%E8%AF%86"><span class="toc-number">1.2.</span> <span class="toc-text">二、关于Redux的重点知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%89%E5%A4%A7%E5%8E%9F%E5%88%99"><span class="toc-number">1.2.1.</span> <span class="toc-text">1. 三大原则</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8D%95%E4%B8%80%E6%95%B0%E6%8D%AE%E6%BA%90"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">(1)单一数据源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-state%E6%98%AF%E5%8F%AA%E8%AF%BB%E7%9A%84"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">(2)state是只读的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8%E7%BA%AF%E5%87%BD%E6%95%B0%E6%9D%A5%E6%89%A7%E8%A1%8C%E4%BF%AE%E6%94%B9"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">(3)使用纯函数来执行修改</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-combineReducer"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.combineReducer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8combineReducer"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">为什么使用combineReducer?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#combineReducer%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">combineReducer示例：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#reducers-todos-js"><span class="toc-number">1.2.2.2.1.</span> <span class="toc-text">reducers&#x2F;todos.js</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#reducers-counter-js"><span class="toc-number">1.2.2.2.2.</span> <span class="toc-text">reducers&#x2F;counter.js</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#reducers-index-js"><span class="toc-number">1.2.2.2.3.</span> <span class="toc-text">reducers&#x2F;index.js</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#App-js"><span class="toc-number">1.2.2.2.4.</span> <span class="toc-text">App.js</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Redux%E4%B8%AD%E7%9A%84connect-%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.3.</span> <span class="toc-text">3.Redux中的connect()方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%9A%E4%B9%89mapStateToProps%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">(1)定义mapStateToProps方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AE%9A%E4%B9%89mapDispatchToProps%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">(2)定义mapDispatchToProps方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Store"><span class="toc-number">1.2.4.</span> <span class="toc-text">4.Store</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-createStore"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">(1)createStore()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Redux-Provider"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">(2)Redux Provider</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%A8React-router%E4%B8%AD%E4%BD%BF%E7%94%A8Provider"><span class="toc-number">1.2.4.2.1.</span> <span class="toc-text">在React-router中使用Provider</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97%E5%8C%96-normalize"><span class="toc-number">1.2.5.</span> <span class="toc-text">5.数据序列化(normalize)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redux%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">Redux工作流程</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Redux
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">HandsomeHan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-09-04T07:38:38.000Z" itemprop="datePublished">2017-09-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/JavaScript/">JavaScript</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Redux/" rel="tag">Redux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="React-Redux"><a href="#React-Redux" class="headerlink" title="React-Redux"></a>React-Redux</h1><h2 id="一、认识Redux"><a href="#一、认识Redux" class="headerlink" title="一、认识Redux"></a>一、认识Redux</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><pre><code>npm install --save redux
+npm install --save react-redux
+</code></pre>
+<h3 id="一句话理解Redux"><a href="#一句话理解Redux" class="headerlink" title="一句话理解Redux"></a>一句话理解Redux</h3><pre><code>应用中的所有state都以一个对象数树的方式存储在一个单一的store中，唯一改变state的方法就是触发action，一个描述发生什么的对象，为了描述action如何改变state树，需要编写reducers。
+</code></pre>
+<h3 id="什么是Action？"><a href="#什么是Action？" class="headerlink" title="什么是Action？"></a>什么是Action？</h3><pre><code>Action本质上是JavaScript的普通对象，action内必须使用一个字符串类型的type字段来表示将要执行的动作。多数情况下type会被定义成字符串常量。我们应该尽量减少在actin中传递数据。
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Action：</span><br><span class="line">export const ADD &#x3D; &#39;ADD&#39;</span><br><span class="line">export const add &#x3D; () &#x3D;&gt; (&#123;</span><br><span class="line">    type: ADD</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export const SUB &#x3D; &#39;SUB&#39;</span><br><span class="line">export const sub &#x3D; () &#x3D;&gt; (&#123;</span><br><span class="line">    type: SUB</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="什么是Reducer？"><a href="#什么是Reducer？" class="headerlink" title="什么是Reducer？"></a>什么是Reducer？</h3><ol>
+<li>设计state结构</li>
+<li>Action处理</li>
+</ol>
+<p><strong>reducer是一个纯函数，接受旧的state和action，返回新的state。</strong></p>
+<p><strong>注意: 每个 reducer 只负责管理全局 state 中它负责的一部分。每个 reducer 的 state 参数都不同，分别对应它管理的那部分 state 数据。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Reducer：</span><br><span class="line">import &#123; ADD, SUB &#125; from &#39;Action&#39;</span><br><span class="line"></span><br><span class="line">const counter &#x3D; (state &#x3D; 0, action) &#x3D;&gt; &#123;</span><br><span class="line">    switch (action.type) &#123;</span><br><span class="line">        case ADD: </span><br><span class="line">            return state + 1</span><br><span class="line">        case SUB:</span><br><span class="line">            return state - 1</span><br><span class="line">        default: </span><br><span class="line">            return state</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>总结：把要做的修改变成一个普通对象，这个对象叫做action，而不是直接修改state。然后编写专门的函数来决定每个action如何改变应用的state，这个函数叫做reducer。</strong></p>
+<hr>
+<h2 id="二、关于Redux的重点知识"><a href="#二、关于Redux的重点知识" class="headerlink" title="二、关于Redux的重点知识"></a>二、关于Redux的重点知识</h2><h3 id="1-三大原则"><a href="#1-三大原则" class="headerlink" title="1. 三大原则"></a>1. 三大原则</h3><h4 id="1-单一数据源"><a href="#1-单一数据源" class="headerlink" title="(1)单一数据源"></a>(1)单一数据源</h4><pre><code>整个应用的state被存储在一棵object tree中，并且这个object tree只存在于唯一一个store中。
+</code></pre>
+<h4 id="2-state是只读的"><a href="#2-state是只读的" class="headerlink" title="(2)state是只读的"></a>(2)state是只读的</h4><pre><code>唯一改变state的方法就是触发action，action是一个用于描述已发生事件的普通对象。
+</code></pre>
+<h4 id="3-使用纯函数来执行修改"><a href="#3-使用纯函数来执行修改" class="headerlink" title="(3)使用纯函数来执行修改"></a>(3)使用纯函数来执行修改</h4><pre><code>为了描述action如何改变state,需要写reducers。
+</code></pre>
+<p><strong>注意：永远不要在reducer中做这些操作</strong></p>
+<ol>
+<li>修改传入参数；</li>
+<li>执行有副作用的操作，如API请求和路由跳转；</li>
+<li>调用非纯函数，如Date.now(), Math.random()。</li>
+</ol>
+<p><strong>只要传入参数相同，返回计算得到的下一个state就一定相同。没有特殊情况，没有副作用，没有API请求，没有变量修改，单纯执行计算。</strong></p>
+<h3 id="2-combineReducer"><a href="#2-combineReducer" class="headerlink" title="2.combineReducer"></a>2.combineReducer</h3><h4 id="为什么使用combineReducer"><a href="#为什么使用combineReducer" class="headerlink" title="为什么使用combineReducer?"></a>为什么使用combineReducer?</h4><pre><code>随着应用变得复杂，需要对 reducer 函数进行拆分，拆分后的每一块独立负责管理 state 的一部分。
+
+combineReducers 辅助函数的作用是，把一个由多个不同 reducer 函数作为 value 的 object，合并成一个最终的 reducer 函数，然后就可以对这个 reducer 调用 createStore。
+
+合并后的 reducer 可以调用各个子 reducer，并把它们的结果合并成一个 state 对象。state 对象的结构由传入的多个 reducer 的 key 决定。
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import &#123; combineReducer &#125; from &#39;redux&#39;</span><br><span class="line"></span><br><span class="line">const todoApp &#x3D; combineReducer(&#123;</span><br><span class="line">    visibilityFilter,</span><br><span class="line">    todos</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export default todoApp</span><br></pre></td></tr></table></figure>
+
+<p>等价写法 =&gt;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export const todoApp &#x3D; (state &#x3D; &#123;&#125;, action) &#x3D;&gt; &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        visibilityFilter: visibilityFilter(state.visibilityFilter, action)</span><br><span class="line">        todos: todos(state.todos, action)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>conbineReducer所做的是生成一个函数，这个函数来调用你的一系列reducer,每个reducer根据他的key来筛选出state中的一部分数据并处理，然后这个生成的函数再将所有reducer的结果合并成一个大的对象。</strong></p>
+<h4 id="combineReducer示例："><a href="#combineReducer示例：" class="headerlink" title="combineReducer示例："></a>combineReducer示例：</h4><h5 id="reducers-todos-js"><a href="#reducers-todos-js" class="headerlink" title="reducers/todos.js"></a>reducers/todos.js</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">export default function todos(state &#x3D; [], action) &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">  case &#39;ADD_TODO&#39;:</span><br><span class="line">    return state.concat([action.text])</span><br><span class="line">  default:</span><br><span class="line">    return state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="reducers-counter-js"><a href="#reducers-counter-js" class="headerlink" title="reducers/counter.js"></a>reducers/counter.js</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">export default function counter(state &#x3D; 0, action) &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">  case &#39;INCREMENT&#39;:</span><br><span class="line">    return state + 1</span><br><span class="line">  case &#39;DECREMENT&#39;:</span><br><span class="line">    return state - 1</span><br><span class="line">  default:</span><br><span class="line">    return state</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="reducers-index-js"><a href="#reducers-index-js" class="headerlink" title="reducers/index.js"></a>reducers/index.js</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import &#123; combineReducers &#125; from &#39;redux&#39;</span><br><span class="line">import todos from &#39;.&#x2F;todos&#39;</span><br><span class="line">import counter from &#39;.&#x2F;counter&#39;</span><br><span class="line"></span><br><span class="line">export default combineReducers(&#123;</span><br><span class="line">  todos,</span><br><span class="line">  counter</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h5 id="App-js"><a href="#App-js" class="headerlink" title="App.js"></a>App.js</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createStore &#125; from &#39;redux&#39;</span><br><span class="line">import reducer from &#39;.&#x2F;reducers&#x2F;index&#39;</span><br><span class="line"></span><br><span class="line">let store &#x3D; createStore(reducer)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Redux中的connect-方法"><a href="#3-Redux中的connect-方法" class="headerlink" title="3.Redux中的connect()方法"></a>3.Redux中的connect()方法</h3><h4 id="1-定义mapStateToProps方法"><a href="#1-定义mapStateToProps方法" class="headerlink" title="(1)定义mapStateToProps方法"></a>(1)定义mapStateToProps方法</h4><pre><code>把当前Redux store state映射到展示组件的props中。
+</code></pre>
+<h4 id="2-定义mapDispatchToProps方法"><a href="#2-定义mapDispatchToProps方法" class="headerlink" title="(2)定义mapDispatchToProps方法"></a>(2)定义mapDispatchToProps方法</h4><pre><code>接收dispatch()方法并返回期望注入到展示组件的props中的回调方法。
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import &#123; connect &#125; from &#39;react-redux&#39;</span><br><span class="line">import &#123; Task &#125; from &#39;.&#x2F;reducers&#39;</span><br><span class="line"></span><br><span class="line">const mapStateToProps &#x3D; (state) &#x3D;&gt; &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        tasks: state.entities.tasks</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const mapDispatchToProps &#x3D; (dispatch) &#x3D;&gt; &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        addUnit: (taskID, unitID, units) &#x3D;&gt; &#123;</span><br><span class="line">            dispatch(Task.addUnit(taskID, unitID, units))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">等价于 &#x3D;&gt;</span><br><span class="line"></span><br><span class="line">const mapDispatchToProps &#x3D; (dispatch) &#x3D;&gt; &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        addUnit: (taskID, unitID, units) &#x3D;&gt; Task.addUnit(taskID, unitID, units))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;多个conncet的书写方式</span><br><span class="line">const VisibleCreateUnit &#x3D; connect(</span><br><span class="line">    mapStateToProps,</span><br><span class="line">    mapDispatchToProps</span><br><span class="line">)(CreateUnit)</span><br><span class="line"></span><br><span class="line">const VisibleCreateTask &#x3D; connect(</span><br><span class="line">    mapStateToProps,</span><br><span class="line">    mapDispatchToProps</span><br><span class="line">)(CreateTask)</span><br><span class="line"></span><br><span class="line">export &#123; VisibleCreateUnit, VisibleCreateTask &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-Store"><a href="#4-Store" class="headerlink" title="4.Store"></a>4.Store</h3><h4 id="1-createStore"><a href="#1-createStore" class="headerlink" title="(1)createStore()"></a>(1)createStore()</h4><p><strong>createStore() 的第二个参数是可选的, 用于设置 state 初始状态。这对开发同构应用时非常有用，服务器端 redux 应用的 state 结构可以与客户端保持一致, 那么客户端可以将从网络接收到的服务端 state 直接用于本地数据初始化。</strong></p>
+<h4 id="2-Redux-Provider"><a href="#2-Redux-Provider" class="headerlink" title="(2)Redux Provider"></a>(2)Redux Provider</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Provider &#125; from &#39;react-redux&#39;</span><br><span class="line">import &#123; createStore &#125; from &#39;redux&#39;</span><br></pre></td></tr></table></figure>
+<h5 id="在React-router中使用Provider"><a href="#在React-router中使用Provider" class="headerlink" title="在React-router中使用Provider"></a>在React-router中使用Provider</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const store &#x3D; createStore(appReducer, normalizedState)</span><br><span class="line"></span><br><span class="line">&lt;Provider store&#x3D;&#123;store&#125;&gt;</span><br><span class="line">    &lt;Router history&#x3D;&#123;browserHistory&#125;&gt;</span><br><span class="line">        &lt;Route path&#x3D;&quot;&#x2F;app&quot; component&#x3D;&#123;App&#125; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;Router&gt;</span><br><span class="line">&lt;&#x2F;Provider&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="5-数据序列化-normalize"><a href="#5-数据序列化-normalize" class="headerlink" title="5.数据序列化(normalize)"></a>5.数据序列化(normalize)</h3><pre><code>示例：Tasks中包含subTasks和units,subTasks中又包含units。
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">import &#123; normalize, schema &#125; from &#39;normalizr&#39;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;首先使用schema最小单元即units</span><br><span class="line">const unitsSchema &#x3D; new schema.Entity(&#39;units&#39;)</span><br><span class="line">&#x2F;&#x2F;subTasks中包含units</span><br><span class="line">const subTasksSchema &#x3D; new schema.Entity(&#39;subTasks&#39;, &#123; units: [unitsSchema] &#125;)</span><br><span class="line">&#x2F;&#x2F;tasks中包含subTasks和units</span><br><span class="line">const tasksSchema &#x3D; new schema.Entity(&#39;tasks&#39;, &#123; </span><br><span class="line">    subTasks: [subTasksSchema],</span><br><span class="line">    units: [unitsSchema]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">......</span><br><span class="line">const initialState &#x3D; &#123;</span><br><span class="line">    tasks: &#123;</span><br><span class="line">        subTasks: &#123;</span><br><span class="line">            units: &#123;</span><br><span class="line">                ......</span><br><span class="line">            &#125;</span><br><span class="line">            ......</span><br><span class="line">        &#125;,</span><br><span class="line">        units: &#123;</span><br><span class="line">            ......</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    groups: &#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125;,</span><br><span class="line">    classes: &#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125;,</span><br><span class="line">    rosters: &#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const stateSchema &#x3D; &#123;</span><br><span class="line">    tasks: [tasksSchema],</span><br><span class="line">    groups: [groupsSchema],</span><br><span class="line">    classes: [classesSchema],</span><br><span class="line">    rosters: [rostersSchema]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const normalizedState &#x3D; normalize(initialState, stateSchema)</span><br><span class="line">console.log(&#39;normalizedState&#39;, normalizedState)</span><br><span class="line"></span><br><span class="line">Object&#123;</span><br><span class="line">    entities: Object&#123;</span><br><span class="line">        .....</span><br><span class="line">    &#125;</span><br><span class="line">    result: Object&#123;</span><br><span class="line">        tasks: array[2],</span><br><span class="line">        groups: array[3],</span><br><span class="line">        classes: array[4],</span><br><span class="line">        rosters: array[5]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>注意：键一定与数组中的键一一对应</strong></p>
+<h2 id="Redux工作流程"><a href="#Redux工作流程" class="headerlink" title="Redux工作流程"></a>Redux工作流程</h2><p>1、用户发出Action</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">store.dispatch(action)</span><br></pre></td></tr></table></figure>
+<p>2、Store自动调用reducer,并且传入两个参数： 当前state, action。Reducer返回新的State</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let nextState &#x3D; reducer(previousState, action)</span><br></pre></td></tr></table></figure>
+<p>3、State一但有变化，store就会调用监听函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">store.subscribe(listener)</span><br><span class="line">function listener() &#123;</span><br><span class="line">    let newState &#x3D; store.getState()</span><br><span class="line">    component.setState(newState)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#React-Redux"><span class="toc-number">1.</span> <span class="toc-text">React-Redux</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AE%A4%E8%AF%86Redux"><span class="toc-number">1.1.</span> <span class="toc-text">一、认识Redux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%90%86%E8%A7%A3Redux"><span class="toc-number">1.1.2.</span> <span class="toc-text">一句话理解Redux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFAction%EF%BC%9F"><span class="toc-number">1.1.3.</span> <span class="toc-text">什么是Action？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFReducer%EF%BC%9F"><span class="toc-number">1.1.4.</span> <span class="toc-text">什么是Reducer？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E4%BA%8ERedux%E7%9A%84%E9%87%8D%E7%82%B9%E7%9F%A5%E8%AF%86"><span class="toc-number">1.2.</span> <span class="toc-text">二、关于Redux的重点知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%89%E5%A4%A7%E5%8E%9F%E5%88%99"><span class="toc-number">1.2.1.</span> <span class="toc-text">1. 三大原则</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8D%95%E4%B8%80%E6%95%B0%E6%8D%AE%E6%BA%90"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">(1)单一数据源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-state%E6%98%AF%E5%8F%AA%E8%AF%BB%E7%9A%84"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">(2)state是只读的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8%E7%BA%AF%E5%87%BD%E6%95%B0%E6%9D%A5%E6%89%A7%E8%A1%8C%E4%BF%AE%E6%94%B9"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">(3)使用纯函数来执行修改</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-combineReducer"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.combineReducer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8combineReducer"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">为什么使用combineReducer?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#combineReducer%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">combineReducer示例：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#reducers-todos-js"><span class="toc-number">1.2.2.2.1.</span> <span class="toc-text">reducers&#x2F;todos.js</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#reducers-counter-js"><span class="toc-number">1.2.2.2.2.</span> <span class="toc-text">reducers&#x2F;counter.js</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#reducers-index-js"><span class="toc-number">1.2.2.2.3.</span> <span class="toc-text">reducers&#x2F;index.js</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#App-js"><span class="toc-number">1.2.2.2.4.</span> <span class="toc-text">App.js</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Redux%E4%B8%AD%E7%9A%84connect-%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.3.</span> <span class="toc-text">3.Redux中的connect()方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%9A%E4%B9%89mapStateToProps%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">(1)定义mapStateToProps方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AE%9A%E4%B9%89mapDispatchToProps%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">(2)定义mapDispatchToProps方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Store"><span class="toc-number">1.2.4.</span> <span class="toc-text">4.Store</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-createStore"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">(1)createStore()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Redux-Provider"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">(2)Redux Provider</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%A8React-router%E4%B8%AD%E4%BD%BF%E7%94%A8Provider"><span class="toc-number">1.2.4.2.1.</span> <span class="toc-text">在React-router中使用Provider</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97%E5%8C%96-normalize"><span class="toc-number">1.2.5.</span> <span class="toc-text">5.数据序列化(normalize)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redux%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">Redux工作流程</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/09/04/Redux/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/09/04/Redux/&text=Redux"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/09/04/Redux/&title=Redux"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/09/04/Redux/&is_video=false&description=Redux"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Redux&body=Check out this article: https://handsomehan.cn/2017/09/04/Redux/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/09/04/Redux/&title=Redux"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/09/04/Redux/&title=Redux"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/09/04/Redux/&title=Redux"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/09/04/Redux/&title=Redux"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/09/04/Redux/&name=Redux&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/09/04/Redux/&t=Redux"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2017-2021
+    HandsomeHan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

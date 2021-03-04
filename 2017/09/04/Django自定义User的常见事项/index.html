@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="使用AbstractBaseUser自定义User需注意的事项必须设置的值USERNAME_FIELD必须设置，设置认证标识，设置成标识的字段unique&#x3D;True;  1234class Users(AbstractBaseUser):    username &#x3D; CharField(max_length&#x3D;128, unique&#x3D;True)    ...    US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django自定义User的常见事项">
+<meta property="og:url" content="https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/index.html">
+<meta property="og:site_name" content="从前慢丶">
+<meta property="og:description" content="使用AbstractBaseUser自定义User需注意的事项必须设置的值USERNAME_FIELD必须设置，设置认证标识，设置成标识的字段unique&#x3D;True;  1234class Users(AbstractBaseUser):    username &#x3D; CharField(max_length&#x3D;128, unique&#x3D;True)    ...    US">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-09-04T11:29:56.000Z">
+<meta property="article:modified_time" content="2018-08-29T02:10:43.452Z">
+<meta property="article:author" content="HandsomeHan">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+        
+      
+    
+    <!-- title -->
+    <title>Django自定义User的常见事项</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/09/04/init/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/09/04/JS%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&text=Django自定义User的常见事项"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&title=Django自定义User的常见事项"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&is_video=false&description=Django自定义User的常见事项"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Django自定义User的常见事项&body=Check out this article: https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&title=Django自定义User的常见事项"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&title=Django自定义User的常见事项"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&title=Django自定义User的常见事项"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&title=Django自定义User的常见事项"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&name=Django自定义User的常见事项&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&t=Django自定义User的常见事项"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8AbstractBaseUser%E8%87%AA%E5%AE%9A%E4%B9%89User%E9%9C%80%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.</span> <span class="toc-text">使用AbstractBaseUser自定义User需注意的事项</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%85%E9%A1%BB%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%80%BC"><span class="toc-number">1.1.</span> <span class="toc-text">必须设置的值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#USERNAME-FIELD"><span class="toc-number">1.1.1.</span> <span class="toc-text">USERNAME_FIELD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#REQUIRED-FIELDS"><span class="toc-number">1.1.2.</span> <span class="toc-text">REQUIRED_FIELDS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#is-active"><span class="toc-number">1.1.3.</span> <span class="toc-text">is_active</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-full-name"><span class="toc-number">1.1.4.</span> <span class="toc-text">get_full_name()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-short-name"><span class="toc-number">1.1.5.</span> <span class="toc-text">get_short_name()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">可以使用的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#get-username"><span class="toc-number">1.2.1.</span> <span class="toc-text">get_username()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#is-staff"><span class="toc-number">1.2.2.</span> <span class="toc-text">is_staff</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#has-perm-perm-obj"><span class="toc-number">1.2.3.</span> <span class="toc-text">has_perm(perm, obj)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#has-module-perms-app-label"><span class="toc-number">1.2.4.</span> <span class="toc-text">has_module_perms(app_label)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BAUser%E6%A8%A1%E5%9E%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">为User模型自定义一个管理器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#create-user-username-field-password-None-other-fields"><span class="toc-number">1.3.1.</span> <span class="toc-text">create_user(username_field, password&#x3D;None, other_fields)**</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#create-superuser-username-field-password-other-fields"><span class="toc-number">1.3.2.</span> <span class="toc-text">create_superuser(username_field, password, other_fields)**</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%94%A8%E6%88%B7%E4%B8%8E%E5%86%85%E7%BD%AE%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E8%A1%A8%E5%8D%95"><span class="toc-number">1.4.</span> <span class="toc-text">自定义用户与内置身份验证表单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UserCreationForm"><span class="toc-number">1.4.1.</span> <span class="toc-text">UserCreationForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UserChangeForm"><span class="toc-number">1.4.2.</span> <span class="toc-text">UserChangeForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AuthenticationForm"><span class="toc-number">1.4.3.</span> <span class="toc-text">AuthenticationForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PasswordResetForm"><span class="toc-number">1.4.4.</span> <span class="toc-text">PasswordResetForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SetPasswordForm"><span class="toc-number">1.4.5.</span> <span class="toc-text">SetPasswordForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PasswordChangeForm"><span class="toc-number">1.4.6.</span> <span class="toc-text">PasswordChangeForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AdminPasswordChangeForm"><span class="toc-number">1.4.7.</span> <span class="toc-text">AdminPasswordChangeForm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.</span> <span class="toc-text">一个完整的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#models-py"><span class="toc-number">1.5.1.</span> <span class="toc-text">models.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#admin-py"><span class="toc-number">1.5.2.</span> <span class="toc-text">admin.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Last"><span class="toc-number">1.5.3.</span> <span class="toc-text">Last</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Django自定义User的常见事项
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">HandsomeHan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-09-04T11:29:56.000Z" itemprop="datePublished">2017-09-04</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Python/">Python</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Django/" rel="tag">Django</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="使用AbstractBaseUser自定义User需注意的事项"><a href="#使用AbstractBaseUser自定义User需注意的事项" class="headerlink" title="使用AbstractBaseUser自定义User需注意的事项"></a>使用AbstractBaseUser自定义User需注意的事项</h1><h2 id="必须设置的值"><a href="#必须设置的值" class="headerlink" title="必须设置的值"></a>必须设置的值</h2><h3 id="USERNAME-FIELD"><a href="#USERNAME-FIELD" class="headerlink" title="USERNAME_FIELD"></a>USERNAME_FIELD</h3><pre><code>必须设置，设置认证标识，设置成标识的字段unique=True;
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Users(AbstractBaseUser):</span><br><span class="line">    username &#x3D; CharField(max_length&#x3D;128, unique&#x3D;True)</span><br><span class="line">    ...</span><br><span class="line">    USERNAME_FIELD &#x3D; &#39;username&#39;</span><br></pre></td></tr></table></figure>
+<h3 id="REQUIRED-FIELDS"><a href="#REQUIRED-FIELDS" class="headerlink" title="REQUIRED_FIELDS"></a>REQUIRED_FIELDS</h3><pre><code>必须设置，通过createsuperuser管理命令创建一个新用户时，用于提示的一个字段名称列表。
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Users(AbstractBaseUser):</span><br><span class="line">    nickname &#x3D; CharField(max_length&#x3D;256)</span><br><span class="line">    ...</span><br><span class="line">    REQUIRED_FIELDS &#x3D; [&#39;nickname&#39;]</span><br></pre></td></tr></table></figure>
+<h3 id="is-active"><a href="#is-active" class="headerlink" title="is_active"></a>is_active</h3><pre><code>必须定义。一个布尔属性，标识用户是否是“active”的，AbstractBaseUser默认是true。
+</code></pre>
+<h3 id="get-full-name"><a href="#get-full-name" class="headerlink" title="get_full_name()"></a>get_full_name()</h3><pre><code>必须定义，long格式的用户标识
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def get_full_name(self):</span><br><span class="line">    return self.username</span><br></pre></td></tr></table></figure>
+<h3 id="get-short-name"><a href="#get-short-name" class="headerlink" title="get_short_name()"></a>get_short_name()</h3><pre><code>必须定义，short格式的用户标识
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def get_short_name(self):</span><br><span class="line">    return self.username</span><br></pre></td></tr></table></figure>
+<h2 id="可以使用的方法"><a href="#可以使用的方法" class="headerlink" title="可以使用的方法"></a>可以使用的方法</h2><h3 id="get-username"><a href="#get-username" class="headerlink" title="get_username()"></a>get_username()</h3><pre><code>返回USERNAME_FIELDS的值
+</code></pre>
+<h3 id="is-staff"><a href="#is-staff" class="headerlink" title="is_staff"></a>is_staff</h3><pre><code>是否允许user访问到admin界面
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@property</span><br><span class="line">def is_staff(self):</span><br><span class="line">    return True</span><br></pre></td></tr></table></figure>
+<h3 id="has-perm-perm-obj"><a href="#has-perm-perm-obj" class="headerlink" title="has_perm(perm, obj)"></a>has_perm(perm, obj)</h3><pre><code>用户是否拥有perm权限
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def has_perm(self, perm, obj&#x3D;None):</span><br><span class="line">    return True</span><br></pre></td></tr></table></figure>
+<h3 id="has-module-perms-app-label"><a href="#has-module-perms-app-label" class="headerlink" title="has_module_perms(app_label)"></a>has_module_perms(app_label)</h3><pre><code>用户是否拥有app中访问models的权限。
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def has_module_perms(self, app_label):</span><br><span class="line">    return True</span><br></pre></td></tr></table></figure>
+<pre><code>需要注册你自定义的用户模型到admin。如果你的自定义用户模型扩展于django.contrib.auth.models.AbscustomauthtractUser，你可以用django的 django.contrib.auth.admin.UserAdmin 类。如果你的用户模型扩展于 AbstractBaseUser，你需要自定义一个ModelAdmin类。他可能继承于默认的django.contrib.auth.admin.UserAdmin。然而，你也需要覆写一些django.contrib.auth.models.AbstractUser 字段的定义不在你自定义用户模型中的。
+</code></pre>
+<h2 id="为User模型自定义一个管理器"><a href="#为User模型自定义一个管理器" class="headerlink" title="为User模型自定义一个管理器"></a>为User模型自定义一个管理器</h2><pre><code>如果自定义的User中含有++username, email, is_staff, is_active, is_superuser, last_login, and date_joined++这些默认User中含有的字段，你就不需要自己定义一个管理器。除此之外，如果有其他自定义的字段，必须为User模型自定义一个管理器。它继承自BaseUserManager并提供两个额外的方法。
+</code></pre>
+<h3 id="create-user-username-field-password-None-other-fields"><a href="#create-user-username-field-password-None-other-fields" class="headerlink" title="create_user(username_field, password=None, other_fields)**"></a>create_user(username_field, password=None, other_fields)**</h3><pre><code>接受username field和required字段来创建用户。
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def create_user(self, username, nickname&#x3D;None, password&#x3D;None):</span><br><span class="line">    if not username:</span><br><span class="line">        raise ValueError(&quot;Users must have username&quot;)</span><br><span class="line"></span><br><span class="line">    user &#x3D; self.model(</span><br><span class="line">        username&#x3D;username,</span><br><span class="line">        nickname&#x3D;nickname,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    user.set_password(password)</span><br><span class="line">    user.save(using&#x3D;self._db)</span><br><span class="line">    return user</span><br></pre></td></tr></table></figure>
+<h3 id="create-superuser-username-field-password-other-fields"><a href="#create-superuser-username-field-password-other-fields" class="headerlink" title="create_superuser(username_field, password, other_fields)**"></a>create_superuser(username_field, password, other_fields)**</h3><pre><code>接受username field和required字段来创建用户。password是必须的。
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def create_superuser(self, username, nickname, password):</span><br><span class="line">    user &#x3D; self.create_user(</span><br><span class="line">        username&#x3D;username,</span><br><span class="line">        password&#x3D;password,</span><br><span class="line">        nickname&#x3D;nickname,</span><br><span class="line">    )</span><br><span class="line">    user.is_admin &#x3D; True</span><br><span class="line">    user.save(using&#x3D;self._db)</span><br><span class="line">    return user</span><br></pre></td></tr></table></figure>
+<h2 id="自定义用户与内置身份验证表单"><a href="#自定义用户与内置身份验证表单" class="headerlink" title="自定义用户与内置身份验证表单"></a>自定义用户与内置身份验证表单</h2><pre><code>Django内置的forms和views和相关联的user model有一些先决条件。如果你的user model没有遵循同样的条件，则需要定义一个替代的form，通过form成为身份验证views配置的一部分。
+</code></pre>
+<h3 id="UserCreationForm"><a href="#UserCreationForm" class="headerlink" title="UserCreationForm"></a>UserCreationForm</h3><pre><code>依赖于User Model. 扩展User时必须重写。
+</code></pre>
+<h3 id="UserChangeForm"><a href="#UserChangeForm" class="headerlink" title="UserChangeForm"></a>UserChangeForm</h3><pre><code>依赖于User Model. 扩展User时必须重写。
+</code></pre>
+<h3 id="AuthenticationForm"><a href="#AuthenticationForm" class="headerlink" title="AuthenticationForm"></a>AuthenticationForm</h3><pre><code>Works with any subclass of AbstractBaseUser, and will adapt to use the field defined in USERNAME_FIELD.
+</code></pre>
+<h3 id="PasswordResetForm"><a href="#PasswordResetForm" class="headerlink" title="PasswordResetForm"></a>PasswordResetForm</h3><pre><code>Assumes that the user model has a field named email that can be used to identify the user and a boolean field named is_active to prevent password resets for inactive users.
+</code></pre>
+<h3 id="SetPasswordForm"><a href="#SetPasswordForm" class="headerlink" title="SetPasswordForm"></a>SetPasswordForm</h3><pre><code>Works with 任何AbstractBaseUser子类
+</code></pre>
+<h3 id="PasswordChangeForm"><a href="#PasswordChangeForm" class="headerlink" title="PasswordChangeForm"></a>PasswordChangeForm</h3><p>Works with 任何AbstractBaseUser子类</p>
+<h3 id="AdminPasswordChangeForm"><a href="#AdminPasswordChangeForm" class="headerlink" title="AdminPasswordChangeForm"></a>AdminPasswordChangeForm</h3><p>Works with 任何AbstractBaseUser子类</p>
+<h2 id="一个完整的例子"><a href="#一个完整的例子" class="headerlink" title="一个完整的例子"></a>一个完整的例子</h2><h3 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line">from django.contrib.auth.models import (</span><br><span class="line">    BaseUserManager, AbstractBaseUser</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MyUserManager(BaseUserManager):</span><br><span class="line">    def create_user(self, email, date_of_birth, password&#x3D;None):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Creates and saves a User with the given email, date of</span><br><span class="line">        birth and password.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        if not email:</span><br><span class="line">            raise ValueError(&#39;Users must have an email address&#39;)</span><br><span class="line"></span><br><span class="line">        user &#x3D; self.model(</span><br><span class="line">            email&#x3D;self.normalize_email(email),</span><br><span class="line">            date_of_birth&#x3D;date_of_birth,</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        user.set_password(password)</span><br><span class="line">        user.save(using&#x3D;self._db)</span><br><span class="line">        return user</span><br><span class="line"></span><br><span class="line">    def create_superuser(self, email, date_of_birth, password):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Creates and saves a superuser with the given email, date of</span><br><span class="line">        birth and password.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        user &#x3D; self.create_user(email,</span><br><span class="line">            password&#x3D;password,</span><br><span class="line">            date_of_birth&#x3D;date_of_birth</span><br><span class="line">        )</span><br><span class="line">        user.is_admin &#x3D; True</span><br><span class="line">        user.save(using&#x3D;self._db)</span><br><span class="line">        return user</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MyUser(AbstractBaseUser):</span><br><span class="line">    email &#x3D; models.EmailField(</span><br><span class="line">        verbose_name&#x3D;&#39;email address&#39;,</span><br><span class="line">        max_length&#x3D;255,</span><br><span class="line">        unique&#x3D;True,</span><br><span class="line">    )</span><br><span class="line">    date_of_birth &#x3D; models.DateField()</span><br><span class="line">    is_active &#x3D; models.BooleanField(default&#x3D;True)</span><br><span class="line">    is_admin &#x3D; models.BooleanField(default&#x3D;False)</span><br><span class="line"></span><br><span class="line">    objects &#x3D; MyUserManager()</span><br><span class="line"></span><br><span class="line">    USERNAME_FIELD &#x3D; &#39;email&#39;</span><br><span class="line">    REQUIRED_FIELDS &#x3D; [&#39;date_of_birth&#39;]</span><br><span class="line"></span><br><span class="line">    def get_full_name(self):</span><br><span class="line">        # The user is identified by their email address</span><br><span class="line">        return self.email</span><br><span class="line"></span><br><span class="line">    def get_short_name(self):</span><br><span class="line">        # The user is identified by their email address</span><br><span class="line">        return self.email</span><br><span class="line"></span><br><span class="line">    def __str__(self):              # __unicode__ on Python 2</span><br><span class="line">        return self.email</span><br><span class="line"></span><br><span class="line">    def has_perm(self, perm, obj&#x3D;None):</span><br><span class="line">        &quot;Does the user have a specific permission?&quot;</span><br><span class="line">        # Simplest possible answer: Yes, always</span><br><span class="line">        return True</span><br><span class="line"></span><br><span class="line">    def has_module_perms(self, app_label):</span><br><span class="line">        &quot;Does the user have permissions to view the app &#96;app_label&#96;?&quot;</span><br><span class="line">        # Simplest possible answer: Yes, always</span><br><span class="line">        return True</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def is_staff(self):</span><br><span class="line">        &quot;Is the user a member of staff?&quot;</span><br><span class="line">        # Simplest possible answer: All admins are staff</span><br><span class="line">        return self.is_admin</span><br></pre></td></tr></table></figure>
+<h3 id="admin-py"><a href="#admin-py" class="headerlink" title="admin.py"></a>admin.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">from django import forms</span><br><span class="line">from django.contrib import admin</span><br><span class="line">from django.contrib.auth.models import Group</span><br><span class="line">from django.contrib.auth.admin import UserAdmin</span><br><span class="line">from django.contrib.auth.forms import ReadOnlyPasswordHashField</span><br><span class="line"></span><br><span class="line">from customauth.models import MyUser</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class UserCreationForm(forms.ModelForm):</span><br><span class="line">    &quot;&quot;&quot;A form for creating new users. Includes all the required</span><br><span class="line">    fields, plus a repeated password.&quot;&quot;&quot;</span><br><span class="line">    password1 &#x3D; forms.CharField(label&#x3D;&#39;Password&#39;, widget&#x3D;forms.PasswordInput)</span><br><span class="line">    password2 &#x3D; forms.CharField(label&#x3D;&#39;Password confirmation&#39;, widget&#x3D;forms.PasswordInput)</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        model &#x3D; MyUser</span><br><span class="line">        fields &#x3D; (&#39;email&#39;, &#39;date_of_birth&#39;)</span><br><span class="line"></span><br><span class="line">    def clean_password2(self):</span><br><span class="line">        # Check that the two password entries match</span><br><span class="line">        password1 &#x3D; self.cleaned_data.get(&quot;password1&quot;)</span><br><span class="line">        password2 &#x3D; self.cleaned_data.get(&quot;password2&quot;)</span><br><span class="line">        if password1 and password2 and password1 !&#x3D; password2:</span><br><span class="line">            raise forms.ValidationError(&quot;Passwords don&#39;t match&quot;)</span><br><span class="line">        return password2</span><br><span class="line"></span><br><span class="line">    def save(self, commit&#x3D;True):</span><br><span class="line">        # Save the provided password in hashed format</span><br><span class="line">        user &#x3D; super(UserCreationForm, self).save(commit&#x3D;False)</span><br><span class="line">        user.set_password(self.cleaned_data[&quot;password1&quot;])</span><br><span class="line">        if commit:</span><br><span class="line">            user.save()</span><br><span class="line">        return user</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class UserChangeForm(forms.ModelForm):</span><br><span class="line">    &quot;&quot;&quot;A form for updating users. Includes all the fields on</span><br><span class="line">    the user, but replaces the password field with admin&#39;s</span><br><span class="line">    password hash display field.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    password &#x3D; ReadOnlyPasswordHashField()</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        model &#x3D; MyUser</span><br><span class="line">        fields &#x3D; (&#39;email&#39;, &#39;password&#39;, &#39;date_of_birth&#39;, &#39;is_active&#39;, &#39;is_admin&#39;)</span><br><span class="line"></span><br><span class="line">    def clean_password(self):</span><br><span class="line">        # Regardless of what the user provides, return the initial value.</span><br><span class="line">        # This is done here, rather than on the field, because the</span><br><span class="line">        # field does not have access to the initial value</span><br><span class="line">        return self.initial[&quot;password&quot;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MyUserAdmin(UserAdmin):</span><br><span class="line">    # The forms to add and change user instances</span><br><span class="line">    form &#x3D; UserChangeForm</span><br><span class="line">    add_form &#x3D; UserCreationForm</span><br><span class="line"></span><br><span class="line">    # The fields to be used in displaying the User model.</span><br><span class="line">    # These override the definitions on the base UserAdmin</span><br><span class="line">    # that reference specific fields on auth.User.</span><br><span class="line">    list_display &#x3D; (&#39;email&#39;, &#39;date_of_birth&#39;, &#39;is_admin&#39;)</span><br><span class="line">    list_filter &#x3D; (&#39;is_admin&#39;,)</span><br><span class="line">    fieldsets &#x3D; (</span><br><span class="line">        (None, &#123;&#39;fields&#39;: (&#39;email&#39;, &#39;password&#39;)&#125;),</span><br><span class="line">        (&#39;Personal info&#39;, &#123;&#39;fields&#39;: (&#39;date_of_birth&#39;,)&#125;),</span><br><span class="line">        (&#39;Permissions&#39;, &#123;&#39;fields&#39;: (&#39;is_admin&#39;,)&#125;),</span><br><span class="line">    )</span><br><span class="line">    # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin</span><br><span class="line">    # overrides get_fieldsets to use this attribute when creating a user.</span><br><span class="line">    add_fieldsets &#x3D; (</span><br><span class="line">        (None, &#123;</span><br><span class="line">            &#39;classes&#39;: (&#39;wide&#39;,),</span><br><span class="line">            &#39;fields&#39;: (&#39;email&#39;, &#39;date_of_birth&#39;, &#39;password1&#39;, &#39;password2&#39;)&#125;</span><br><span class="line">        ),</span><br><span class="line">    )</span><br><span class="line">    search_fields &#x3D; (&#39;email&#39;,)</span><br><span class="line">    ordering &#x3D; (&#39;email&#39;,)</span><br><span class="line">    filter_horizontal &#x3D; ()</span><br><span class="line"></span><br><span class="line"># Now register the new UserAdmin...</span><br><span class="line">admin.site.register(MyUser, MyUserAdmin)</span><br><span class="line"># ... and, since we&#39;re not using Django&#39;s built-in permissions,</span><br><span class="line"># unregister the Group model from admin.</span><br><span class="line">admin.site.unregister(Group)</span><br></pre></td></tr></table></figure>
+<h3 id="Last"><a href="#Last" class="headerlink" title="Last"></a>Last</h3><pre><code>在settings里面设置自定义的模型指定为项目的默认用户模型
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AUTH_USER_MODEL &#x3D; &#39;users.Account&#39;</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8AbstractBaseUser%E8%87%AA%E5%AE%9A%E4%B9%89User%E9%9C%80%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.</span> <span class="toc-text">使用AbstractBaseUser自定义User需注意的事项</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%85%E9%A1%BB%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%80%BC"><span class="toc-number">1.1.</span> <span class="toc-text">必须设置的值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#USERNAME-FIELD"><span class="toc-number">1.1.1.</span> <span class="toc-text">USERNAME_FIELD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#REQUIRED-FIELDS"><span class="toc-number">1.1.2.</span> <span class="toc-text">REQUIRED_FIELDS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#is-active"><span class="toc-number">1.1.3.</span> <span class="toc-text">is_active</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-full-name"><span class="toc-number">1.1.4.</span> <span class="toc-text">get_full_name()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-short-name"><span class="toc-number">1.1.5.</span> <span class="toc-text">get_short_name()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">可以使用的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#get-username"><span class="toc-number">1.2.1.</span> <span class="toc-text">get_username()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#is-staff"><span class="toc-number">1.2.2.</span> <span class="toc-text">is_staff</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#has-perm-perm-obj"><span class="toc-number">1.2.3.</span> <span class="toc-text">has_perm(perm, obj)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#has-module-perms-app-label"><span class="toc-number">1.2.4.</span> <span class="toc-text">has_module_perms(app_label)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BAUser%E6%A8%A1%E5%9E%8B%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">为User模型自定义一个管理器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#create-user-username-field-password-None-other-fields"><span class="toc-number">1.3.1.</span> <span class="toc-text">create_user(username_field, password&#x3D;None, other_fields)**</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#create-superuser-username-field-password-other-fields"><span class="toc-number">1.3.2.</span> <span class="toc-text">create_superuser(username_field, password, other_fields)**</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%94%A8%E6%88%B7%E4%B8%8E%E5%86%85%E7%BD%AE%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E8%A1%A8%E5%8D%95"><span class="toc-number">1.4.</span> <span class="toc-text">自定义用户与内置身份验证表单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UserCreationForm"><span class="toc-number">1.4.1.</span> <span class="toc-text">UserCreationForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UserChangeForm"><span class="toc-number">1.4.2.</span> <span class="toc-text">UserChangeForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AuthenticationForm"><span class="toc-number">1.4.3.</span> <span class="toc-text">AuthenticationForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PasswordResetForm"><span class="toc-number">1.4.4.</span> <span class="toc-text">PasswordResetForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SetPasswordForm"><span class="toc-number">1.4.5.</span> <span class="toc-text">SetPasswordForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PasswordChangeForm"><span class="toc-number">1.4.6.</span> <span class="toc-text">PasswordChangeForm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AdminPasswordChangeForm"><span class="toc-number">1.4.7.</span> <span class="toc-text">AdminPasswordChangeForm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.</span> <span class="toc-text">一个完整的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#models-py"><span class="toc-number">1.5.1.</span> <span class="toc-text">models.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#admin-py"><span class="toc-number">1.5.2.</span> <span class="toc-text">admin.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Last"><span class="toc-number">1.5.3.</span> <span class="toc-text">Last</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&text=Django自定义User的常见事项"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&title=Django自定义User的常见事项"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&is_video=false&description=Django自定义User的常见事项"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Django自定义User的常见事项&body=Check out this article: https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&title=Django自定义User的常见事项"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&title=Django自定义User的常见事项"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&title=Django自定义User的常见事项"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&title=Django自定义User的常见事项"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&name=Django自定义User的常见事项&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2017/09/04/Django%E8%87%AA%E5%AE%9A%E4%B9%89User%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BA%8B%E9%A1%B9/&t=Django自定义User的常见事项"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2017-2021
+    HandsomeHan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

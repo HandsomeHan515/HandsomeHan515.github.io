@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="排序算法（Python） 排序分为内部排序和外部排序  内部排序 交换排序、选择排序、插入排序、归并排序   Google Chrome 对 sort 做了特殊处理。对于长度 &lt;&#x3D; 10 的数组使用的是插入排序（稳定排序）；对于长度 &gt; 10 的的数组使用的是快速排序（不稳定排序）。   交换排序冒泡排序（BubbleSort） 基本思想：对待排序记录关键字从后往前（逆序）进行多遍扫描">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用的排序算法（Python）">
+<meta property="og:url" content="https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/index.html">
+<meta property="og:site_name" content="从前慢丶">
+<meta property="og:description" content="排序算法（Python） 排序分为内部排序和外部排序  内部排序 交换排序、选择排序、插入排序、归并排序   Google Chrome 对 sort 做了特殊处理。对于长度 &lt;&#x3D; 10 的数组使用的是插入排序（稳定排序）；对于长度 &gt; 10 的的数组使用的是快速排序（不稳定排序）。   交换排序冒泡排序（BubbleSort） 基本思想：对待排序记录关键字从后往前（逆序）进行多遍扫描">
+<meta property="og:locale">
+<meta property="og:image" content="https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8E%92%E5%BA%8F%E7%9A%84%E4%BD%BF%E7%94%A8.jpg">
+<meta property="og:image" content="https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/bubble_sort.jpg">
+<meta property="og:image" content="https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/selection_sort.jpg">
+<meta property="og:image" content="https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/insertion_sort.jpg">
+<meta property="og:image" content="https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F.jpg">
+<meta property="article:published_time" content="2018-02-01T02:56:51.000Z">
+<meta property="article:modified_time" content="2018-08-29T02:10:43.460Z">
+<meta property="article:author" content="HandsomeHan">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8E%92%E5%BA%8F%E7%9A%84%E4%BD%BF%E7%94%A8.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png">
+        
+      
+    
+    <!-- title -->
+    <title>常用的排序算法（Python）</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/02/05/%E5%B8%B8%E8%A7%81%E7%9A%84%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/01/30/react%E4%B8%AD%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&text=常用的排序算法（Python）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&title=常用的排序算法（Python）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&is_video=false&description=常用的排序算法（Python）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=常用的排序算法（Python）&body=Check out this article: https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&title=常用的排序算法（Python）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&title=常用的排序算法（Python）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&title=常用的排序算法（Python）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&title=常用的排序算法（Python）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&name=常用的排序算法（Python）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&t=常用的排序算法（Python）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">排序算法（Python）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">内部排序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">交换排序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%EF%BC%88BubbleSort%EF%BC%89"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">冒泡排序（BubbleSort）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">快速排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.2.</span> <span class="toc-text">选择排序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">直接选择排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">堆排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">插入排序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">直接插入排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">希尔排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.4.</span> <span class="toc-text">归并排序</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        常用的排序算法（Python）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">HandsomeHan</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-02-01T02:56:51.000Z" itemprop="datePublished">2018-02-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Algorithm/">Algorithm</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Algorithm/" rel="tag">Algorithm</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="排序算法（Python）"><a href="#排序算法（Python）" class="headerlink" title="排序算法（Python）"></a>排序算法（Python）</h1><blockquote>
+<p>排序分为内部排序和外部排序</p>
+</blockquote>
+<h2 id="内部排序"><a href="#内部排序" class="headerlink" title="内部排序"></a>内部排序</h2><blockquote>
+<p>交换排序、选择排序、插入排序、归并排序</p>
+</blockquote>
+<ul>
+<li>Google Chrome 对 sort 做了特殊处理。对于长度 &lt;= 10 的数组使用的是插入排序（稳定排序）；对于长度 &gt; 10 的的数组使用的是快速排序（不稳定排序）。</li>
+</ul>
+<p><img src="%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8E%92%E5%BA%8F%E7%9A%84%E4%BD%BF%E7%94%A8.jpg" alt="浏览器对排序的使用"></p>
+<h3 id="交换排序"><a href="#交换排序" class="headerlink" title="交换排序"></a>交换排序</h3><h4 id="冒泡排序（BubbleSort）"><a href="#冒泡排序（BubbleSort）" class="headerlink" title="冒泡排序（BubbleSort）"></a>冒泡排序（BubbleSort）</h4><ul>
+<li>基本思想：对待排序记录关键字从后往前（逆序）进行多遍扫描，当发现相邻两个关键字的次序与排序要求的规则不相符时，就将这两个记录进行交换。这样，关键字较小的记录将逐渐从后面向前面移动，就像气泡在水中向上浮一样。</li>
+<li>提升效率，当在某一遍扫描时，发现数据都已经按顺序排列了，就不再进行后续的扫描。</li>
+</ul>
+<p><img src="bubble_sort.jpg" alt="冒泡排序过程"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def bubble_sort(arr):</span><br><span class="line">    times &#x3D; 0</span><br><span class="line">    for i in range(len(arr) - 1):</span><br><span class="line">        for j in range(len(arr) - 1 - i):</span><br><span class="line">            if arr[j] &gt; arr[j + 1]:</span><br><span class="line">                arr[j], arr[j + 1] &#x3D; arr[j + 1], arr[j]</span><br><span class="line"></span><br><span class="line">    return arr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    arr &#x3D; [10, 8, 4, 7, 5]</span><br><span class="line">    sort_arr &#x3D; bubble_sort(arr)</span><br><span class="line">    print(sort_arr)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def bubble_sort_v2(arr):</span><br><span class="line">    for i in range(len(arr) - 1):</span><br><span class="line">        pos &#x3D; 0</span><br><span class="line">        for j in range(len(arr) - 1 - i):</span><br><span class="line">            if arr[j] &gt; arr[j + 1]:</span><br><span class="line">                arr[j], arr[j + 1] &#x3D; arr[j + 1], arr[j]</span><br><span class="line">                pos &#x3D; 1</span><br><span class="line"></span><br><span class="line">        if pos &#x3D;&#x3D; 0:</span><br><span class="line">            break</span><br><span class="line"></span><br><span class="line">    return arr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    arr &#x3D; arr &#x3D; [10, 8, 4, 7, 5]</span><br><span class="line">    sort_arr &#x3D; bubble_sort_v2(arr)</span><br><span class="line">    print(sort_arr)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><ul>
+<li>快速排序使用分治策略把待排序的序列分为两个子序列，具体步骤为：</li>
+</ul>
+<ol>
+<li>从数列中挑出一个元素，称该元素为“基准”；</li>
+<li>扫描一遍序列，将所有比基准小的元素排在基准前面，所有比基准大的元素排在基准后面；（该操作称为分区操作，分区操作结束后，基准元素所处的位置就是最终排序后的位置）</li>
+<li>通过递归将各子序列划分为更小的序列，直到把小于基准值元素的子数列和大于基准值元素的子数列排序。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">def quick_sort(arr):</span><br><span class="line">    # 交换元素位置</span><br><span class="line">    def swap(arr, i, j):</span><br><span class="line">        arr[i], arr[j] &#x3D; arr[j], arr[i]</span><br><span class="line"></span><br><span class="line">    # 分区，左小右大</span><br><span class="line">    def partition(array, left, right):</span><br><span class="line">        storeIndex &#x3D; left</span><br><span class="line">        # 基准，直接选择最右侧的</span><br><span class="line">        pivot &#x3D; arr[right]</span><br><span class="line"></span><br><span class="line">        for i in range(left, right):</span><br><span class="line">            if arr[i] &lt; pivot:</span><br><span class="line">                swap(arr, storeIndex, i)</span><br><span class="line">                storeIndex +&#x3D; 1</span><br><span class="line"></span><br><span class="line">        swap(arr, right, storeIndex)  # 将基准元素与storeIndex做交换</span><br><span class="line"></span><br><span class="line">        return storeIndex</span><br><span class="line"></span><br><span class="line">    def sort(arr, left, right):</span><br><span class="line">        if left &gt; right:</span><br><span class="line">            return</span><br><span class="line"></span><br><span class="line">        storeIndex &#x3D; partition(arr, left, right)</span><br><span class="line">        sort(arr, left, storeIndex - 1)</span><br><span class="line">        sort(arr, storeIndex + 1, right)</span><br><span class="line"></span><br><span class="line">    sort(arr, 0, len(arr) - 1)</span><br><span class="line"></span><br><span class="line">    return arr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    arr &#x3D; [10, 8, 4, 7, 5]</span><br><span class="line">    sort_arr &#x3D; quick_sort(arr)</span><br><span class="line">    print(sort_arr)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><h4 id="直接选择排序"><a href="#直接选择排序" class="headerlink" title="直接选择排序"></a>直接选择排序</h4><ul>
+<li>基本思想：对 n 个记录进行扫描，选择最小的记录，将其输出，接着在剩下的 n-1 个记录中扫描，选择最小的将其输出…，不断的重复该过程，直到只剩一个记录为止。</li>
+</ul>
+<p><img src="selection_sort.jpg" alt="选择排序过程"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def selection_sort(arr):</span><br><span class="line">    for i in range(len(arr)):</span><br><span class="line">        for j in range(i, len(arr)):</span><br><span class="line">            if arr[i] &gt; arr[j]:</span><br><span class="line">                arr[i], arr[j] &#x3D; arr[j], arr[i]</span><br><span class="line"></span><br><span class="line">    return arr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    arr &#x3D; [10, 8, 4, 7, 5]</span><br><span class="line">    sort_arr &#x3D; selection_sort(arr)</span><br><span class="line">    print(sort_arr)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h4><ul>
+<li>基本思想</li>
+</ul>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><h4 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h4><ul>
+<li>基本思想：通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应的为止并插入。</li>
+<li>插入排序在实现上，在从后向前扫描过程中，需要反复的把已排序的元素逐步向后移动，为最新元素提供插入空间。</li>
+</ul>
+<p><img src="insertion_sort.jpg" alt="直接插入排序过程"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def insertion_sort(arr):</span><br><span class="line">    for i in range(1, len(arr)):</span><br><span class="line">        for j in range(i, 0, -1):</span><br><span class="line">            if arr[j - 1] &gt; arr[j]:</span><br><span class="line">                arr[j - 1],  arr[j] &#x3D; arr[j], arr[j - 1]</span><br><span class="line">            else:</span><br><span class="line">                break</span><br><span class="line">    return arr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    arr &#x3D; [10, 8, 4, 7, 5]</span><br><span class="line">    sort_arr &#x3D; insertion_sort(arr)</span><br><span class="line">    print(sort_arr)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h4><ul>
+<li>希尔排序又称为缩小增量排序</li>
+<li>基本思想：将需要排序的序列划分为若干个较小的序列，对这些序列进行直接插入排序，通过这样的操作可使需要排序的序列基本有序，最后再使用一次直接插入排序。目的是：首先对数量较小的序列进行直接插入排序可提高效率，最后对基本有序的序列进行直接插入排序，也可提高效率，从而使整个排序过程的效率得到提升。</li>
+</ul>
+<p><img src="%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F.jpg" alt="希尔排序过程"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def shell_sort(arr):</span><br><span class="line">    gap = len(arr) // 2</span><br><span class="line"></span><br><span class="line">    while gap &gt; 0:</span><br><span class="line">        for i in range(gap, len(arr)):</span><br><span class="line">            while (i - gap) &gt;= 0:</span><br><span class="line">                if arr[i - gap] &gt; arr[i]:</span><br><span class="line">                    arr[i - gap], arr[i] = arr[i], arr[i - gap]</span><br><span class="line">                    i -= gap</span><br><span class="line">                else:</span><br><span class="line">                    break</span><br><span class="line">        gap = gap // 2</span><br><span class="line"></span><br><span class="line">    return arr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    arr = [10, 8, 4, 7, 3]</span><br><span class="line">    sort_arr = shell_sort(arr)</span><br><span class="line">    print(sort_arr)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><ul>
+<li>将两个或多个有序表合成一个有序表</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">def merge_sort(arr):</span><br><span class="line">    if len(arr) &lt;&#x3D; 1:</span><br><span class="line">        return arr</span><br><span class="line"></span><br><span class="line">    mid &#x3D; len(arr) &#x2F; 2</span><br><span class="line">    left &#x3D; merge_sort(arr[:mid])</span><br><span class="line">    right &#x3D; merge_sort(arr[mid:])</span><br><span class="line"></span><br><span class="line">    return merge(left, right)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def merge(left, right):</span><br><span class="line">    sort_arr &#x3D; []</span><br><span class="line">    i &#x3D; 0</span><br><span class="line">    j &#x3D; 0</span><br><span class="line"></span><br><span class="line">    while i &lt; len(left) and j &lt; len(right):</span><br><span class="line">        if left[i] &lt;&#x3D; right[j]:</span><br><span class="line">            sort_arr.append(left[i])</span><br><span class="line">            i +&#x3D; 1</span><br><span class="line">        else:</span><br><span class="line">            sort_arr.append(right[j])</span><br><span class="line">            j +&#x3D; 1</span><br><span class="line"></span><br><span class="line">    print(sort_arr)</span><br><span class="line"></span><br><span class="line">    sort_arr +&#x3D; left[i:]</span><br><span class="line">    sort_arr +&#x3D; right[j:]</span><br><span class="line">    return sort_arr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    arr &#x3D; [10, 8, 4, 7, 5]</span><br><span class="line">    sort_arr &#x3D; merge_sort(arr)</span><br><span class="line">    print(sort_arr)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">排序算法（Python）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">内部排序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">交换排序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%EF%BC%88BubbleSort%EF%BC%89"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">冒泡排序（BubbleSort）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">快速排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.2.</span> <span class="toc-text">选择排序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">直接选择排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">堆排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">插入排序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">直接插入排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">希尔排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-number">1.1.4.</span> <span class="toc-text">归并排序</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&text=常用的排序算法（Python）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&title=常用的排序算法（Python）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&is_video=false&description=常用的排序算法（Python）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=常用的排序算法（Python）&body=Check out this article: https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&title=常用的排序算法（Python）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&title=常用的排序算法（Python）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&title=常用的排序算法（Python）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&title=常用的排序算法（Python）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&name=常用的排序算法（Python）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://handsomehan.cn/2018/02/01/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%EF%BC%88Python%EF%BC%89/&t=常用的排序算法（Python）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2017-2021
+    HandsomeHan
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Archives</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/resumes/">Resume</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
